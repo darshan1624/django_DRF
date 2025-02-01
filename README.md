@@ -11,3 +11,4 @@ Readme consists code tracking.
     - serialize data using StudentSerializer, get actual data using serialized_data.data
     - render serialized_data.data using JSONRenderer.render() 
     - return HttpResonse(json_data, content_type= 'application/json')
+7) Used JSONResponse() insted of JSONRenderer.render() and HttpResponse 
