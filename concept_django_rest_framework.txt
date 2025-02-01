@@ -2,7 +2,9 @@ Api? types of api? e.g.? web api? How web API works? How to use public web API i
 REST? REST API? CRUD?
 DRF ? Why to use DRF?
 json library .dumps, .loads ? 
-seraializers? serializer class, how to create serializer class? Flow of serializing data present in db?
+seraializers? serializer class, how to create serializer class? Flow of serializing data present in db? 
+JSONReponse?
+ 
 
 
 
@@ -157,22 +159,66 @@ serializer = StudentSerializer(stu, many=True)
 This will show you the serialized data/python dict. 
 
 * JSONRenderer
-This is used to render serialized data into JSON which is understandable by FRONT end.
+This is used to render serialized data into JSON which is understandable 
+by FRONT end.
 
 How to render serialized data into JSON using JSONRendered? 
 from rest_framework.renderers import JSONRenderer
 3) json_data = JSONRenderer().render(serializer.data)
 
-In 1) ,2) ,3) setps you extract data from db, serialize data, render serialized data into json.
+In 1) ,2) ,3) setps you extract data from db, serialize data, 
+render serialized data into json.
 
 * JsonResponse
-JsonResponse(data, encoder=DjangoJSONEncoder, safe=True, json_dumps_params=None, **kwargs)
+JsonResponse(data, encoder=DjangoJSONEncoder, safe=True, 
+		json_dumps_params=None, **kwargs)
 - An httpResponse subclass that helps to create a JSON-encoded reponse. 
 - Its default content type is set to application/json.
 - The encoder is used to serialize the data.
-- When safe is set to True, dict has to be passed, else raise typeerror. if false any object is allowed. 
+- When safe is set to True, dict has to be passed, else raise typeerror. 
+  if false any object is allowed. 
 
-  
+
+Serializer Fields: 
+serializable fields are used in serializers to convert complex data 
+types (like Django models) into JSON, and vice versa.
+
+1) CharField(max_length=None, min_length=None, allow_blank=False,
+	 trim_whitespace=True)
+2) IntegerField(max_value=None, min_value=None)
+3) FloatField(max_value=None, min_value=None)
+4) DecimalField(max_digits, decimal_places, coerce_to_string=None, 
+	max_value=None, min_value=None)
+5) SlugField(max_length=50, min_length=None, allow_blank=False)
+6) EmailField(max_length=None, min_length=None, allow_blank=False)
+7) BooleanField()
+8) NullBooleanField()
+9) URLField(max_length=200, min_length=None, allow_blank=False)
+10) FileField(max_length=None, allow_empty_file=False, use_url=UPLOADED_FILES_USE_URL)
+11) ImageField(max_length=None, allow_empty_file=False, use_url=UPLOADED_FILES_USE_URL)
+12) DateField(format=api_settings.DATE_FORMAT, input_formats=None)
+13) TimeField(format=api_settings.TIME_FORMAT, input_formats=None)
+14) DateTimeField(format=api_settings.DATETIME_FORMAT, input_formats=None, default_timezone=None)
+15) DurationField(max_value=None, min_value=None)
+16) RegexField(regex, max_length=None, min_length=None, allow_blank=False)
+17) UUIDField(format='hex_verbose')
+18) FilePathField(path, match=None, recursive=False, allow_files=True, allow_folders=False, required=None, **kwargs)
+19) IPAddressField(protocol='both', unpack_ipv4=False, **options)
+20) ChoiceField(choices)
+21) MultipleChoiceField(choices)
+22) ListField(child=<A_FIELD_INSTANCE>, allow_empty=True, 
+	min_length=None, max_length=None)
+23) DictField(child=<A_FIELD_INSTANCE>, allow_empty=True)
+24) HStoreField(child=<A_FIELD_INSTANCE>, allow_empty=True)
+25) JSONField(binary, encoder)
+26) ReadOnlyField()
+27) HiddenField()
+28) ModelField(model_field=<Django ModelField instance>)
+29) SerializerMethodField(method_name=None)
+
+
+
+
 
 
 
