@@ -1,6 +1,7 @@
 Refer concept_django_rest_framework.txt for Theory. 
 Readme consists code tracking. 
 
+Serialization: 
 1) created a project drf1, app api within it. 
 2) installed djangorestframework - pip install djangorestframework
 3) configured in settings.py INSTALLED_APPS = [ .., 'api','rest_framework'] 
@@ -12,3 +13,6 @@ Readme consists code tracking.
     - render serialized_data.data using JSONRenderer.render() 
     - return HttpResonse(json_data, content_type= 'application/json')
 7) Used JSONResponse() insted of JSONRenderer.render() and HttpResponse 
+
+Deserialization: 
+Added deserialization concept in concept_django_rest_framework.txt

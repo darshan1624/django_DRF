@@ -2,9 +2,8 @@ Api? types of api? e.g.? web api? How web API works? How to use public web API i
 REST? REST API? CRUD?
 DRF ? Why to use DRF?
 json library .dumps, .loads ? 
-seraializers? serializer class, how to create serializer class? Flow of serializing data present in db? 
-JSONReponse?
- 
+seraializers? serializer class, how to create serializer class? Flow of serializing data present in db? JSONReponse?
+serializer fields 
 
 
 
@@ -217,10 +216,48 @@ types (like Django models) into JSON, and vice versa.
 29) SerializerMethodField(method_name=None)
 
 
+Deserialization:
+Serializers are also responsible for desrialization which means it allows
+parsed data to be converted back into complex types, after first 
+validating incoming data. 
 
+flow? 
+Json Data---(a)--->Python Native DataType---(b)--->complex Dataype
+a: Parse Data 
+b: Deserialization
 
+Pre-requistes for Deserialization:
+* BytesIO()
+1) stream = io.BytesIO(json_data)
+// will convert json_data to stream data/ continous flow of data/file 
+like object.
+This lets you process or parse the data as if it came from a file, 
+making it easier to handle.
 
+* JSONParser()
+This let you parse json data to python native datatype. 
+from rest_framework.parsers import JSONParser 
+2) parsed_data = JSONParser().parse(stream)
 
+Deserialization allows parsed data to be converted back into complex types, after first 
+validating incoming data.
+
+//Creating serializer Object 
+3) serializer = StudentSerializer(data = parsed_data)
+//validated data
+4) serialize.is_valid()
+can view data using 
+	serializer.validated_data
+can view errors using 
+	serializer.errors 
+
+flow: we are converting json data to native python datatype
+and then convert to complex datatype i.e. model object which can be insert 
+into db table.  
+
+When do we do desrialization ? 
+when we want to insert, updatae, modify data sent from user. 
+similarly, to get data we do serialization. 
 
 
 
