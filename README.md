@@ -16,3 +16,4 @@ Serialization:
 
 Deserialization: 
 Added deserialization concept in concept_django_rest_framework.txt
+1) created a project drf2, app api within it. 
