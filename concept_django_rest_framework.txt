@@ -1,0 +1,183 @@
+Api? types of api? e.g.? web api? How web API works? How to use public web API in general?
+REST? REST API? CRUD?
+DRF ? Why to use DRF?
+json library .dumps, .loads ? 
+seraializers? serializer class, how to create serializer class? Flow of serializing data present in db?
+
+
+
+Api? 
+Intermediate agent that allows two or more applications to communicate 
+with each other.  
+
+types: private(used within org), partner(used by partner/client), 
+public(third party services)
+
+e.g.: application(consumer) -- google Map API -- gmap(provider)
+
+application contact api and gmap exposes its services via api 
+
+With api we can have single db and multiple applications(web, android, ..)
+If i want to create a adnroid application of my website. Then that android
+app to work, what all services are required are exposed via api.
+
+Web API? 
+Api which is interface for web is web api. It may consist of one or more 
+endpoints to define request and response.
+
+
+How web API works? 
+clientWeb(HTTP request) -- api -- webapp/db
+client makes http request to api. api communicate to db. 
+db provides required date to api. api returns data to client.   
+
+data returned is in json or xml format. 
+
+How to use public web API in general?  
+register to API
+API prvides api key apiKey: 274848hdjvb838823
+Whenever you need kto communicate with server make request with api key 
+e.g.: http://vector.com/?key=274848hdjvb838823
+If API key aunthentication succeed, API will provide required data. 
+
+
+REST:
+It is just an architectural guideline to develop webapi.
+
+REST API:
+The api which is developed using REST is know an REST API/ RESTful API. 
+
+CRUD:
+Operation - HTTP_methods - Description  
+Create - POST - Creating/posting/inserting data
+Read - GET
+Update - PUT,PATCH - PUT for complete data to be updated, PATCH for partial update 
+delete - DELETE - Deleting data 
+
+e.g.:
+http://geekyshows.com/api/students
+Suppose to use student data api we have been provided above link 
+by UGC(org which keeps all university students data). 
+api services student data.
+
+http://geekyshows.com/api/students
+Base url: geekyshows.com
+naming convention: api
+endpoint: students
+
+requests: 
+GET: /api/students     will return json data [{'id:1', 'name':'rahul'}, {'id:2', 'name':'amit'}] 
+request single student data
+GET: /api/students/1   will return [{'id:1', 'name':'yash'}
+
+POST: api/students  
+{'name': 'anket'}   will insert data [{'id':11, 'name':'anket'}]
+
+
+Django REST framework: 
+It is a powerful and flexible toolkit for building WebApis.
+
+Why to use DRF?
+- You can test api while building it 
+- You get OAuth1, OAuth2 packages in Authentication policies 
+- Serialization supports both ORM and non ORM data sources. 
+
+pip install djangorestframework 
+
+INstalled_apps = [
+'rest_framework'
+]
+
+
+prerequieste for - Serializers
+Python-json
+python has a builtin package called json used to work with json data.
+
+.dumps(data)- This is used to convert python object into json string.
+e.g.: 
+import json
+python_data = {'name':'amit', 'rollno':100}
+json_data = json.dumps(python_data)
+print(json_Data) ==> {"name":"amit", "rollno":100}
+// json data is always in double quotes ""
+
+.loads(data)- This is used to parse json string.
+e.g.: 
+json_data = {"name":"amit", "rollno":100}
+parsed_data = json.loads(json_data)
+print(parsed_data) ==> {'name':'amit', 'rollno':100}
+
+
+Serializers:
+serializers are responsible for converting complex data such as querysets
+or model objects to native python datatypes called serialization. That can
+be easily rendered into JSON, XML or other content types which is easily 
+understandable by Front End. 
+
+Serializers are also responsible for desrialization which means it allows
+parsed data to be converted back into complex types, after first 
+validating incoming data.     
+
+Serializer class: 
+DRF provides a Serializer class which gives you a powerful, generic way
+to control the ouput of your responses.
+
+How to create serializer class?
+Create a seprate serializer.py file to write all serializers.
+
+from rest_framework import serializers
+class StudentSerializer(serializers.Serializer):
+	name = serializers.CharField(max_length=100)
+	rollno = serializers.IntegerField()
+	city = serializers.CharField(max_length=100)
+
+Flow of serializing data present in db:
+translate the db data to json form and send it to client 
+similarly, convert the json data comming from client to python datatype. 
+
+We have records in table.
+records means model objects 
+model objects means complex data. 
+
+complex Dataype---(a)--->Python Native DataType---(b)--->Json Data
+a= seriialization, b = render into json
+	
+e.g.: 
+ //Creating a model instance stu 
+1) stu = Student.objects.get(id=1)
+      //Converting a model instance stu to Python Dict/ Serializing object
+2) serializer = StudentSerializer(stu)
+
+//Creating a query set 
+stu = Student.objects.all()
+//Converting a queryset to list of python Dict/ Serializing queryset
+serializer = StudentSerializer(stu, many=True)
+
+* serializer.data 
+This will show you the serialized data/python dict. 
+
+* JSONRenderer
+This is used to render serialized data into JSON which is understandable by FRONT end.
+
+How to render serialized data into JSON using JSONRendered? 
+from rest_framework.renderers import JSONRenderer
+3) json_data = JSONRenderer().render(serializer.data)
+
+In 1) ,2) ,3) setps you extract data from db, serialize data, render serialized data into json.
+
+* JsonResponse
+JsonResponse(data, encoder=DjangoJSONEncoder, safe=True, json_dumps_params=None, **kwargs)
+- An httpResponse subclass that helps to create a JSON-encoded reponse. 
+- Its default content type is set to application/json.
+- The encoder is used to serialize the data.
+- When safe is set to True, dict has to be passed, else raise typeerror. if false any object is allowed. 
+
+  
+
+
+
+
+
+
+
+
