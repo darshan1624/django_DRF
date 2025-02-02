@@ -32,9 +32,24 @@ CRUD operation with API:
     5) Write view. 
             get json data if any(id), 
             stream data, 
-            serialize data, 
+            get id of student if any, 
+            get data from db, 
+            serialize data (many =True),
             render data JSONRenderer().render() 
     6) create URL
 
     Cases Handled: 1) request.body can be empty so use if else     
                    2) models.object.all() can also be empty so use .exists()
+
+2) POST/Create/insert: 
+    1) create function create() in StudentSerializer class 
+    2) Write a function in seprate application my_separate_app.py to send json data
+    3) Write view.
+            get json data, 
+            stream data,
+            parse data, 
+            deserailize data (data = python_data), 
+            add the deserialized data to db, 
+            if any errors send the reponse
+
+

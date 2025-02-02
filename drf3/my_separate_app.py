@@ -14,4 +14,22 @@ def get_students(id = None):
     data = json_data.json()
     print(data)
 
-get_students(1)
+# get_students(1)
+
+
+
+
+def post_students():
+    
+    data = {
+        'name': 'Anket',
+        'roll':103,
+        'city':'Mumbai'
+    }
+    
+    json_data = json.dumps(data)
+    received_json_data = requests.post(url=URL, data=json_data)
+    data = received_json_data.json()
+    print(data)
+
+post_students()

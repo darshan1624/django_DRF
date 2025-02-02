@@ -6,9 +6,11 @@ from api.models import Student
 from api.serializer import StudentSerializer
 from django.http import HttpResponse
 import json
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
-
+@csrf_exempt
 def get_students(request):
     if request.method == 'GET': 
         if request.body: 
@@ -29,6 +31,24 @@ def get_students(request):
         serialized_data = StudentSerializer(modelobject, many=True)
         json_data = JSONRenderer().render(serialized_data.data)
         return HttpResponse(json_data, content_type='application/json')
+
+    if request.method == 'POST':
+        if request.body:
+            json_data = request.body
+            stream = io.BytesIO(json_data)
+            python_data = JSONParser().parse(stream)
+            serialized_data = StudentSerializer(data=python_data)
+            if serialized_data.is_valid():
+                serialized_data.save()
+                response = {'msg':'Data inserted successfully'}
+                # json_data = json.dumps(response)
+                json_data = JSONRenderer().render(response)
+                return HttpResponse(json_data, content_type = 'application/json')
+            
+            error_data = JSONRenderer().render(serialized_data.errors)
+            return HttpResponse(error_data, content_type='application/json')
+
+
 
 
             
