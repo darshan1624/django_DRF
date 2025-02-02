@@ -22,3 +22,7 @@ Added deserialization concept in concept_django_rest_framework.txt
 4) Create a serializer class in seprate file serializer.py 
 5) Create a seprate application to send JSON data, which received by our app. my_seprate_app.py 
 6) Write a view to receive data. And also send msg in JSON form if data insrted in db successfully. 
+
+CRUD operation with API:
+1) GET/READ
+    1) create project drf2, app api 
