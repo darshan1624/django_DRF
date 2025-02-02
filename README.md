@@ -25,4 +25,16 @@ Added deserialization concept in concept_django_rest_framework.txt
 
 CRUD operation with API:
 1) GET/READ
-    1) create project drf2, app api 
+    1) create project drf3, app api 
+    2) create Student(name, roll, city) model. create superuser.
+    3) create serailizer class in serializer.py file.  
+    4) create seprate application to send GET request for single id or all students. my_separate_app.py
+    5) Write view. 
+            get json data if any(id), 
+            stream data, 
+            serialize data, 
+            render data JSONRenderer().render() 
+    6) create URL
+
+    Cases Handled: 1) request.body can be empty so use if else     
+                   2) models.object.all() can also be empty so use .exists()
