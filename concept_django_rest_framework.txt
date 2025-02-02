@@ -3,7 +3,10 @@ REST? REST API? CRUD?
 DRF ? Why to use DRF?
 json library .dumps, .loads ? 
 seraializers? serializer class, how to create serializer class? Flow of serializing data present in db? JSONReponse?
-serializer fields 
+serializer fields
+Deserialization? flow? io.BytesIO, streamdata? JSONParser? serializer.is_valid(), .save(), .validated_data, .errors? 
+	How to write create(self, validated_data) function in serializer class ? What happens when you do .save() ?
+
 
 
 
@@ -164,6 +167,7 @@ by FRONT end.
 How to render serialized data into JSON using JSONRendered? 
 from rest_framework.renderers import JSONRenderer
 3) json_data = JSONRenderer().render(serializer.data)
+// you can also use json.dumps() 
 
 In 1) ,2) ,3) setps you extract data from db, serialize data, 
 render serialized data into json.
@@ -246,18 +250,37 @@ validating incoming data.
 3) serializer = StudentSerializer(data = parsed_data)
 //validated data
 4) serialize.is_valid()
+// is_valid check if data is proper. e.g. max_length is satisfied, column is
+integer depending on model definition. 
+
 can view data using 
-	serializer.validated_data
+	> serializer.validated_data
+	e.g.:
+	{"name": "Amit", "roll": "100a", "city": "Mumbai"}
 can view errors using 
-	serializer.errors 
+	> serializer.errors 
+	e.g.:
+	{"name": "", "roll": "100a", "city": "Mumbai"}
+	{'name': ['This field may not be blank.'], 'roll': ['A valid integer is required.']}
 
 flow: we are converting json data to native python datatype
 and then convert to complex datatype i.e. model object which can be insert 
 into db table.  
 
-When do we do desrialization ? 
+When do we do deserialization ? 
 when we want to insert, updatae, modify data sent from user. 
 similarly, to get data we do serialization. 
+
+Extra functions in serializer class while deserializing?
+class StudentSreializer(serializers.Serializer):
+	..
+
+	def create(self, validated_data):
+		return super().create(**validated_data)
+
+Here validated_data contains dictionary. To pass dict you use **.  
+This create method is executed when you call serializer.save(). This create
+a new entry in table.  
 
 
 
