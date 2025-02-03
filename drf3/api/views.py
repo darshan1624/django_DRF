@@ -67,6 +67,16 @@ def get_students(request):
             json_data = JSONRenderer().render(serialized_data.errors)
             return HttpResponse(json_data, content_type = 'application/json')
 
+    if request.method == 'DELETE':
+        if request.body:
+            json_data = request.body
+            stream = io.BytesIO(json_data)
+            python_data = JSONParser().parse(stream)
+            id = python_data.get('id', None)
+            Student.objects.get(id=id).delete()
+            response = {'msg':'Record Deleted Successfully'}
+            json_data = JSONRenderer().render(response)
+            return HttpResponse(json_data, content_type = 'application/json')
 
 
 

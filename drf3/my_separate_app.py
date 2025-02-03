@@ -50,4 +50,16 @@ def update_students():
     data = received_json_data.json()
     print(data)
 
-update_students()
+# update_students()
+
+
+def delete_students():
+    
+    data = {'id': 1}
+    
+    json_data = json.dumps(data)
+    received_json_data = requests.delete(url=URL, data=json_data)
+    data = received_json_data.json()
+    print(data)
+
+delete_students()

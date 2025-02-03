@@ -67,4 +67,15 @@ CRUD operation with API:
         for complete update 
             serialzie data serializer(originalModelObject, parsedPythonData)
 
+4) DELETE:
+    Create a function in separate application to send data to delete records. 
+    Write view.
+    get json data,
+    stream data,
+    parse data,
+    get id from parse data, 
+    delete the model object with that id. 
+    return response data deleted 
+
+
 

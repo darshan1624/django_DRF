@@ -316,6 +316,12 @@ if serializer.is_valid():
 	serializer.save()
 
 
+Delete:
+There is no extra function in StudentSreializer class to delete. 
+Just identify the model object and delete. 
+Student.objects.get(id=id).delete()
+
+
 
 
 
