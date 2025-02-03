@@ -321,6 +321,33 @@ There is no extra function in StudentSreializer class to delete.
 Just identify the model object and delete. 
 Student.objects.get(id=id).delete()
 
+Function based View: 
+def studentapi(request):
+	if request.method == 'GET':
+		..
+
+urls.py 
+from . import views
+urlpatterns = [
+	path('studentapi/', views.studentapi)
+]
+
+
+
+Class based Views:
+from django.views import View 
+class StudentAPI(View):
+	def get(self, request, *args, **kwargs):
+	// instead of if request.method == 'GET': we write functions
+		.. 
+		remaining code remains same 
+	
+
+urls.py 
+from . import views
+urlpatterns = [
+	path('studentapi/', views.StudentAPI.as_view())
+]
 
 
 
