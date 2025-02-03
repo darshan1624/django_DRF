@@ -52,4 +52,19 @@ CRUD operation with API:
             add the deserialized data to db, 
             if any errors send the reponse
 
+3) PUT/Update/partial/complete update:
+    //Instead of PATCH we are using partial =True in DRF serializer 
+    1) create function update in Studentserializer class
+    2) Write a function in seprate application to make update request/ send data
+    3) Write view.
+        get json data,
+        stream data,
+        parse data, 
+        get id of student from parse data,
+        find the orginal model object with idz,
+        for partial update 
+            serialzie data serializer(originalModelObject, parsedPythonData, partial = True)
+        for complete update 
+            serialzie data serializer(originalModelObject, parsedPythonData)
+
 

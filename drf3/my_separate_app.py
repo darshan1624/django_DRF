@@ -26,10 +26,28 @@ def post_students():
         'roll':103,
         'city':'Mumbai'
     }
-    
+
     json_data = json.dumps(data)
     received_json_data = requests.post(url=URL, data=json_data)
     data = received_json_data.json()
     print(data)
 
-post_students()
+# post_students()
+
+
+
+def update_students():
+    
+    data = {
+        'id': 1,
+        'name': 'Yash',
+        'roll': '110',
+        'city':'Mumbai'
+    }
+    
+    json_data = json.dumps(data)
+    received_json_data = requests.put(url=URL, data=json_data)
+    data = received_json_data.json()
+    print(data)
+
+update_students()

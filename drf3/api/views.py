@@ -48,6 +48,26 @@ def get_students(request):
             error_data = JSONRenderer().render(serialized_data.errors)
             return HttpResponse(error_data, content_type='application/json')
 
+    
+    if request.method == 'PUT':
+        if request.body:
+            json_data = request.body 
+            stream = io.BytesIO(json_data)
+            python_data = JSONParser().parse(stream)
+            id = python_data.get('id', None)
+            original_data = Student.objects.filter(id=id).first()
+            serialized_data = StudentSerializer(original_data, data=python_data, partial=True)
+            # if complete data to be update
+            # serialized_data = StudentSerializer(original_data, data=python_data)s
+            if serialized_data.is_valid():
+                serialized_data.save()
+                response = {'msg': 'Data Updated Successfully'}
+                json_data = JSONRenderer().render(response)
+                return HttpResponse(json_data, content_type = 'application/json')
+            json_data = JSONRenderer().render(serialized_data.errors)
+            return HttpResponse(json_data, content_type = 'application/json')
+
+
 
 
 

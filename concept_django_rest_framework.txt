@@ -282,6 +282,38 @@ Here validated_data contains dictionary. To pass dict you use **.
 This create method is executed when you call serializer.save(). This create
 a new entry in table.  
 
+CRUD operations with API: 
+Till now we have seen Read, Create (GET, POST).
+Update:
+types?  
+partial update 
+complete update (all fields value)
+
+Extra function in serializer class to update records? 
+class StudentSerializer(serializers.Serializer):
+	..
+	
+	def update(self, instance, validated_data):
+		instance.name = validated_data.get('name', insatnce.name)
+		insatnce.roll = validated_data.get('roll', instance.roll)
+		instance.city = validated_data.get('city', insatnce.city)
+		
+		instance.save()
+		return instance 
+
+instance.name - old data stored in db 
+validated_data - new data 
+
+Complete update: 
+originalModelObject = Student.objects.get(id=id) // entry to be updated  
+serializer = StudentSerilaizer(originalModelObject, data=pythondata)
+if serializer.is_valid()
+	serializer.save()
+
+Partial Update:
+serializer = StudentSerializer(originalModelObject, data=pythondata, partial=True)
+if serializer.is_valid():
+	serializer.save()
 
 
 
