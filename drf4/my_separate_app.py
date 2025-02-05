@@ -23,7 +23,7 @@ def post_students():
     
     data = {
         'name': 'Anket',
-        'roll':103,
+        'roll':102,
         'city':'Mumbai'
     }
 
@@ -39,10 +39,8 @@ def post_students():
 def update_students():
     
     data = {
-        'id': 1,
-        'name': 'Yash',
-        'roll': '110',
-        'city':'Mumbai'
+        'id': 12,
+        'roll': '101',
     }
     
     json_data = json.dumps(data)
@@ -55,7 +53,7 @@ def update_students():
 
 def delete_students():
     
-    data = {'id': 1}
+    data = {'id': 13}
     
     json_data = json.dumps(data)
     received_json_data = requests.delete(url=URL, data=json_data)
