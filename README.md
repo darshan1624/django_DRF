@@ -86,4 +86,11 @@ Add validation for roll no. If rollno > 200 then, raise error 'seats full'
         if False return value
         else raise serializers.ValidationError('Seats Full')
 
+2) Object Level Validation:
+Add validation for name 'Amit' that his city must be 'Mumbai'
+    create function validate(self, data):
+        if name=='amit' and city != 'mumbai'
+        if False return value
+        raise serializers.ValidationError('Seats Full')
+
 

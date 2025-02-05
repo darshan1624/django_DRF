@@ -378,3 +378,19 @@ class StudentSerializer(serializers.Serializer):
 
 //value is the value of the filed that need to be validated. 
 //validate_roll is invoked when you call serialized_data.is_valid()
+
+-Object Level Validation
+When we need to do valdiation that requires multiple fields we do object 
+level validation by adding method called validate() to Serialzer class.
+
+validate() method should return the validated value or raise
+a serializers.ValidationError 
+
+e.g.:
+def validate(self, data):
+	name = data.get('name')
+	city = data.get('city')
+	if name.lower() == 'amit' and city.lower() != 'mumbai':
+		raise serializers.ValidationError('City must be Mumbai')
+	return data
+//data is dictionary of field values.

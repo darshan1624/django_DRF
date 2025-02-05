@@ -23,4 +23,12 @@ class StudentSerializer(serializers.Serializer):
             raise serializers.ValidationError('Seats Full')
         return value
 
+    # if validate_roll() cause no issues then validate will be called.
+    def validate(self, data):
+        name = data.get('name')
+        city = data.get('city')
+        if name == 'Amit' and city != 'Mumbai':
+            raise serializers.ValidationError('Enter correct city')
+        return data
+
     

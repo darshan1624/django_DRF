@@ -22,8 +22,8 @@ def get_students(id = None):
 def post_students():
     
     data = {
-        'name': 'Anshuman',
-        'roll':208,
+        'name': 'Amit',
+        'roll':150,
         'city':'Banglore'
     }
 
