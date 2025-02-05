@@ -93,4 +93,11 @@ Add validation for name 'Amit' that his city must be 'Mumbai'
         if False return value
         raise serializers.ValidationError('Seats Full')
 
+3) Validators:
+Add validation that name must start with 'D'
+    create function with any name 
+    e.g.: def start_with_r(self,value)
+    Mention function in serializer class field name
+    e.g.: name = serilaizers.CharField(max_length=200, validators=[starts_with_r])
+
 

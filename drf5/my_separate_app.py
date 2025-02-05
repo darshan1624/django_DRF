@@ -23,8 +23,8 @@ def post_students():
     
     data = {
         'name': 'Amit',
-        'roll':150,
-        'city':'Banglore'
+        'roll':180,
+        'city':'Mumbai'
     }
 
     json_data = json.dumps(data)

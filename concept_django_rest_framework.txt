@@ -392,5 +392,21 @@ def validate(self, data):
 	city = data.get('city')
 	if name.lower() == 'amit' and city.lower() != 'mumbai':
 		raise serializers.ValidationError('City must be Mumbai')
-	return data
+	return data				
 //data is dictionary of field values.
+
+
+Validators:
+You can create any function outside seriualzier class and mention it in serializer class field in validators paramete to
+validate data.
+e.g.:
+	def starts_with_r(value):
+	    if value['0'].lower() != 'r':
+	       raise serializer.ValidationError('name dont start with r')
+
+class StudentSerializer(serializers.Serializer):
+	name = serializers.CharField(max_length=100,
+				validators=[starts_with_r])
+
+//Priority: 1) Validators, 2) field level validaton, 3) Object level
+//Can apply all validation together.
