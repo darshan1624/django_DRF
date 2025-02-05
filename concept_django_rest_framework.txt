@@ -6,6 +6,9 @@ seraializers? serializer class, how to create serializer class? Flow of serializ
 serializer fields
 Deserialization? flow? io.BytesIO, streamdata? JSONParser? serializer.is_valid(), .save(), .validated_data, .errors? 
 	How to write create(self, validated_data) function in serializer class ? What happens when you do .save() ?
+	How to write update(self, instnace, validate_data) function? ALL CRUD opertions?
+Class Based View?, How to write URL for class Based view? 
+
 
 
 
@@ -351,4 +354,27 @@ urlpatterns = [
 
 
 
+Validation:
+types: 
+-Field Level Validation 
+-Object level 
+-Validators
 
+-Field Level Validation
+We can specify field level validation by adding validate_fieldName()
+methods to your Serializer subclass.
+validate_filedName() method should return the validated value or raise
+a serializers.ValidationError 
+e.g.: 
+class StudentSerializer(serializers.Serializer):
+	name = serializers.CharField(max_length = 200)
+	roll = serializers.IntegerField()
+	city = serializers.CharField(max_length = 200)
+
+	def validate_roll(self, value):
+		if value >= 200:
+			rasie serializers.ValidationError('Seat Full')
+		return value 
+
+//value is the value of the filed that need to be validated. 
+//validate_roll is invoked when you call serialized_data.is_valid()
