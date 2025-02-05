@@ -78,4 +78,12 @@ CRUD operation with API:
     return response data deleted 
 
 
+Validations:
+1) Field Level Validation:
+Add validation for roll no. If rollno > 200 then, raise error 'seats full'
+    create function validate_roll(self, value):
+    if rollno > 200: 
+        if False return value
+        else raise serializers.ValidationError('Seats Full')
+
 

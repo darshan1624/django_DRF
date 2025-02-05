@@ -35,14 +35,17 @@ class StudentAPI(View):
         json_data = JSONRenderer().render(serialized_data.data)
         return HttpResponse(json_data, content_type='application/json')
 
+
     # if request.method == 'POST':
     def post(self, request, *args, **kwargs):
+        print('yaha pe aya')
         if request.body:
             json_data = request.body
             stream = io.BytesIO(json_data)
             python_data = JSONParser().parse(stream)
             serialized_data = StudentSerializer(data=python_data)
             if serialized_data.is_valid():
+                print('yaha print kar data',serialized_data.data)
                 serialized_data.save()
                 response = {'msg':'Data inserted successfully'}
                 # json_data = json.dumps(response)

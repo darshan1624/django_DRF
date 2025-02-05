@@ -22,9 +22,9 @@ def get_students(id = None):
 def post_students():
     
     data = {
-        'name': 'Anket',
-        'roll':102,
-        'city':'Mumbai'
+        'name': 'Anshuman',
+        'roll':208,
+        'city':'Banglore'
     }
 
     json_data = json.dumps(data)
@@ -32,7 +32,7 @@ def post_students():
     data = received_json_data.json()
     print(data)
 
-# post_students()
+post_students()
 
 
 
@@ -60,4 +60,4 @@ def delete_students():
     data = received_json_data.json()
     print(data)
 
-delete_students()
+# delete_students()
