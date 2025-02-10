@@ -14,7 +14,7 @@ def get_students(id = None):
     data = json_data.json()
     print(data)
 
-# get_students(1)
+# get_students()
 
 
 
@@ -22,8 +22,8 @@ def get_students(id = None):
 def post_students():
     
     data = {
-        'name': 'Anket',
-        'roll':102,
+        'name': 'Yash',
+        'roll':105,
         'city':'Mumbai'
     }
 
@@ -39,8 +39,8 @@ def post_students():
 def update_students():
     
     data = {
-        'id': 12,
-        'roll': '101',
+        'id': 18,
+        'roll': '200',
     }
     
     json_data = json.dumps(data)
@@ -53,7 +53,7 @@ def update_students():
 
 def delete_students():
     
-    data = {'id': 13}
+    data = {'id': 14}
     
     json_data = json.dumps(data)
     received_json_data = requests.delete(url=URL, data=json_data)

@@ -101,3 +101,9 @@ Add validation that name must start with 'D'
     e.g.: name = serilaizers.CharField(max_length=200, validators=[starts_with_r])
 
 
+ModelSerializer:
+1) create class StudentSerializer and use serializers.ModelSerialzer 
+2) create class Meta inside StudentSerializer class 
+3) Specify model name inside Meta class 
+4) use fields = [] //to specifiy fields '__all__' for all fields 
+5) use exclude = [] 
