@@ -7,7 +7,10 @@ serializer fields
 Deserialization? flow? io.BytesIO, streamdata? JSONParser? serializer.is_valid(), .save(), .validated_data, .errors? 
 	How to write create(self, validated_data) function in serializer class ? What happens when you do .save() ?
 	How to write update(self, instnace, validate_data) function? ALL CRUD opertions?
-Class Based View?, How to write URL for class Based view? 
+Class Based View?, How to write URL for class Based view?
+Types of validations? field level? object level? validators? 
+
+
 
 
 
@@ -410,3 +413,23 @@ class StudentSerializer(serializers.Serializer):
 
 //Priority: 1) Validators, 2) field level validaton, 3) Object level
 //Can apply all validation together.
+
+
+
+Model Serializer: 
+- The Model Serializer class provides a shortcut that lets you automatically 
+create a serializer class with fields that corresponds to Model Fields. 
+- It will automatically generate validators for the serializer, such as 
+unique_together validators. 
+- It includes simple default implementation of create() and update().  
+
+How to write ModelSerializer class?
+
+from rest_framework import Serializers 
+class StudentSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Student
+		fields = ['id', 'name', 'roll', 'city']
+
+* fields = '__all__'  //to mention all fields 
+* exclude = ['roll']  
