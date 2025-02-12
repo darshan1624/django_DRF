@@ -60,6 +60,8 @@ class StudentAPI(View):
             stream = io.BytesIO(json_data)
             python_data = JSONParser().parse(stream)
             id = python_data.get('id', None)
+
+            print(id, 'idddddddddddddddddddddddddd')
             original_data = Student.objects.filter(id=id).first()
             serialized_data = StudentSerializer(original_data, data=python_data, partial=True)
             # if complete data to be update

@@ -107,3 +107,23 @@ ModelSerializer:
 3) Specify model name inside Meta class 
 4) use fields = [] //to specifiy fields '__all__' for all fields 
 5) use exclude = [] 
+
+
+Special arguments in ModelSerializer class fields: 
+1) class StudentSerializer(serializers.ModelSerializer):
+	name = serializers.CharField(read_only=True)
+
+    // read_only=True doesn't allow you to update name field 
+
+2) Another 2nd way: 
+	class Meta:
+		model = Student
+		fields = ['id', 'name', 'roll', 'city']
+		read_only = ['name','roll']
+
+3) Another 3rd way:
+class StudentSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Student
+		fields = ['id', 'name', 'roll', 'city']
+		extra_kwargs = {'name':{'read_only':True}}

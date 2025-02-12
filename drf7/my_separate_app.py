@@ -39,16 +39,19 @@ def post_students():
 def update_students():
     
     data = {
-        'id': 18,
-        'roll': '200',
+        'id': 12,
+        'name': 'Pandya',
+        'roll': '180',
+        'city': 'Delhi'
     }
     
     json_data = json.dumps(data)
+    print('=================')
     received_json_data = requests.put(url=URL, data=json_data)
     data = received_json_data.json()
     print(data)
 
-# update_students()
+update_students()
 
 
 def delete_students():
@@ -60,4 +63,4 @@ def delete_students():
     data = received_json_data.json()
     print(data)
 
-delete_students()
+# delete_students()
