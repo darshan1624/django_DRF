@@ -433,3 +433,37 @@ class StudentSerializer(serializers.ModelSerializer):
 
 * fields = '__all__'  //to mention all fields 
 * exclude = ['roll']  
+
+
+Special arguments in ModelSerializer class fields: 
+class StudentSerializer(serializers.ModelSerializer):
+	name = serializers.CharField(read_only=True)
+	class Meta:
+		model = Student
+		fields = ['id', 'name', 'roll', 'city']
+
+
+// read_only=True doesn't allow you to update name field 
+
+Another 2nd way: 
+class StudentSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Student
+		fields = ['id', 'name', 'roll', 'city']
+		read_only = ['name','roll']
+
+Another 3rd way:
+class StudentSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Student
+		fields = ['id', 'name', 'roll', 'city']
+		extra_kwargs = {'name':{'read_only':True}}
+
+Validation in ModelSerializer:
+Validation steps remain same as in Serializer class.
+Can use field level, object level, validatiors.
+To use validators you need to write fields explicitly. 
+	//name = serializers.CharField(vaildators = [start_with_r])
+	//class Meta:
+	//	model = Student
+	//	fields = ['name','roll']
