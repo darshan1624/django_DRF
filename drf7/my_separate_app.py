@@ -17,8 +17,6 @@ def get_students(id = None):
 # get_students()
 
 
-
-
 def post_students():
     
     data = {
@@ -40,13 +38,12 @@ def update_students():
     
     data = {
         'id': 12,
-        'name': 'Pandya',
-        'roll': '180',
-        'city': 'Delhi'
+        'name': 'Amit',
+        'roll': 180,
+        'city': 'Mumbai'
     }
     
     json_data = json.dumps(data)
-    print('=================')
     received_json_data = requests.put(url=URL, data=json_data)
     data = received_json_data.json()
     print(data)

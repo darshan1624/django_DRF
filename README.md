@@ -127,3 +127,7 @@ class StudentSerializer(serializers.ModelSerializer):
 		model = Student
 		fields = ['id', 'name', 'roll', 'city']
 		extra_kwargs = {'name':{'read_only':True}}
+
+
+Validation in ModelSerilaizer class:
+    Used field level, object level, validatiors.
