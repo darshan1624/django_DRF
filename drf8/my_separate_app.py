@@ -1,7 +1,7 @@
 import requests 
 import json 
 
-URL = "http://127.0.0.1:8000/get_students/"
+URL = "http://127.0.0.1:8000/studentapi/"
 
 def get_students(id = None):
     data = {}
@@ -9,7 +9,10 @@ def get_students(id = None):
         data = {'id':id}
     json_data = json.dumps(data)
     print(json_data)
-    json_data = requests.get(url=URL, data= json_data)
+
+    headers = {'content-Type':'applicaton/json'}
+
+    json_data = requests.get(url=URL, headers=headers, data= json_data)
 
     data = json_data.json()
     print(data)
@@ -18,17 +21,20 @@ def get_students(id = None):
 
 
 def post_students():
-    
     data = {
         'name': 'Yash',
-        'roll':105,
-        'city':'Mumbai'
+        'roll': 105,
+        'city': 'Mumbai'
     }
 
+    # Ensure the Content-Type is correctly spelled
+    headers = {'Content-Type': 'application/json'}
+
     json_data = json.dumps(data)
-    received_json_data = requests.post(url=URL, data=json_data)
+    received_json_data = requests.post(url=URL, headers=headers, data=json_data)
     data = received_json_data.json()
     print(data)
+
 
 post_students()
 
@@ -42,9 +48,11 @@ def update_students():
         'roll': 180,
         'city': 'Mumbai'
     }
+
+    headers = {'content-Type':'applicaton/json'}
     
     json_data = json.dumps(data)
-    received_json_data = requests.put(url=URL, data=json_data)
+    received_json_data = requests.put(url=URL, headers=headers, data=json_data)
     data = received_json_data.json()
     print(data)
 

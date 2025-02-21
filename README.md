@@ -131,3 +131,10 @@ class StudentSerializer(serializers.ModelSerializer):
 
 Validation in ModelSerilaizer class:
     Used field level, object level, validatiors.
+
+
+Function based api_view:
+1) created proj drf8, app api
+2) Used api_view to create api for simple GET, POST
+3) Since using DRF now we have accessible brosable API. 
+ 
