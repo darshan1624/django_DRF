@@ -9,6 +9,10 @@ Deserialization? flow? io.BytesIO, streamdata? JSONParser? serializer.is_valid()
 	How to write update(self, instnace, validate_data) function? ALL CRUD opertions?
 Class Based View?, How to write URL for class Based view?
 Types of validations? field level? object level? validators? 
+ModelSerializer? How to write ModelSerializer class? Validation in Model Serializer?
+Function based api_view? How to write function based api_view? Request? Requests? request.data? request.method? 
+request.query_parmas? Reponse?
+ 
 
 
 
@@ -467,3 +471,92 @@ To use validators you need to write fields explicitly.
 	//class Meta:
 	//	model = Student
 	//	fields = ['name','roll']
+
+
+
+Function Based api_view 
+This wrapper provide a few bits of functionality such as making sure you 
+receive request instances in your view, and adding context to response
+objects so that content negotiation can be performed. 
+(content negotiation means sending data from sever depending on content type
+	requested). 
+
+The warpper also provide behaviour such as returning 405 method Not allowed
+reponses when appropriate, and handling any ParseError exceptions that occur
+when accessing request.data with malfunctioned input.
+
+By default only get methods will be accepted. Other methods will respond 
+with "405 Method Not Allowed."
+
+How to write function based api_view? 
+from rest_framework.decorators import api_view 
+from rest_framework.responses import Response 
+from rest_framework import status 
+
+@api_view(['GET']) 
+def student_list(request):
+	if request.method == 'GET':
+		stu = Student.objects.all()
+	serializer = StudentSerializer(stu, many=True)
+	return Response(serilaizer.data)
+
+@api_view(['POST'])
+def student_list(request):
+	if request.method == 'POST':
+		serializer = StudentSerializer(data= request.data)
+		if serializer.is_valid():
+			serializer.save()
+			res = {'msg': 'Data Created'}
+			return Reponse(res, status=status.HTTP_201_CREATED)
+		return Response(res, status = status.HTTP_400_BAD_REQUEST)
+
+Can mention all request in one @api_view['GET', 'POST', 'PUT', 'DELETE']
+
+
+Request:
+Request Objects provides flexible request parsing, that allows to treat requests 
+with json data or any other content type. 
+
+request.data
+request.data returns parsed content of the request body. 
+It includes all parsed content, including file and non file inputs. 
+It supports parsing the content of HTTP methods(POST,PUT,PATCH). 
+
+
+request.method
+request.method returns the uppercase string representation of the requests
+HTTP method. 
+
+request.query_params
+request.query_params is more correctly named synonym for request.GET.
+So use request.query_params instead of request.GET 
+Any Http method may include query parameters, not just GET request. 
+
+
+Response
+Restframework supports HTTP content negotiation by providing Reponse class
+which allows you to return content that can be rendered into multiple
+content type, depending on the client request.
+
+Response objects are intialized with data, which should consist of native
+python datatype. REST framework then uses statdard HTTP content neotiation 
+to determine how it should render the final response object. 
+
+Reponse(data, status=None, template_name=None, headers=None, 
+		content_type=None)
+
+data: serialized/python data
+status: A status code for the response. Defaults to 200
+headers: A dictionary of HTTP headers to use in the reponse.
+content_type: The content type of the reponse. Typically set automatically
+	by the renderer determined by the content negotiation, but there
+	may be some cases where you need to specify the content type
+	explicitly. 
+
+
+
+ 
+
+
+
+
