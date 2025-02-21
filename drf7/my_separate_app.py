@@ -53,7 +53,7 @@ update_students()
 
 def delete_students():
     
-    data = {'id': 14}
+    data = {'id': 3}
     
     json_data = json.dumps(data)
     received_json_data = requests.delete(url=URL, data=json_data)
