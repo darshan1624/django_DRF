@@ -136,5 +136,10 @@ Validation in ModelSerilaizer class:
 Function based api_view:
 1) created proj drf8, app api
 2) Used api_view to create api for simple GET, POST
-3) Since using DRF now we have accessible brosable API. 
- 
+3) Since using DRF now we have accessible browsable API. 
+
+Function based api_view: CRUD
+1) created proj drf9, app api 
+2) created model, serializer, separate application.
+3) created views. Written all CRUD operations using api_view.
+4) Used my_separate_app for testing.
