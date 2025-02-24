@@ -539,7 +539,7 @@ which allows you to return content that can be rendered into multiple
 content type, depending on the client request.
 
 Response objects are intialized with data, which should consist of native
-python datatype. REST framework then uses statdard HTTP content neotiation 
+python datatype. REST framework then uses standard HTTP content negotiation 
 to determine how it should render the final response object. 
 
 Reponse(data, status=None, template_name=None, headers=None, 
@@ -559,5 +559,33 @@ status=status.HTTP_400_BAD_REQUEST
  
 
 
+Class Based APIView:
+REST framework provides APIView class, which subclasses Django View class. 
 
+APIView classes are different from regular View classes:
+- Requests passed to the handler methods will be REST frameworks request
+instances, not DJnago HttpRequest instances. 
+- Handler methods may return REST frameworks Response, instead of Djangos
+  HttpResponse. REST framework then uses statdard HTTP content negotiation 
+  to determine how it should render the final response object. 
+- Any APIException exceptions will be caught and add into responses.
+- Incoming requests will be authenticated and appropriate permission and 
+  throttle checks will be run before dispatching the request to the handler 
+  method.
+
+How to write class Based APIView?
+from rest_framework.views import APIView
+class StudentAPI(APIView):
+	def get(self, request, format = None):
+		stu = Student.objects.all()
+		serializer = StudentSerializer(stu, many=True)
+		return Response(serilaizer.data)
+
+	def post(self, request, format = None):
+		serializer = StudentSerializer(data= request.data)
+		if serializer.is_valid():
+			serializer.save()
+			res = {'msg': 'Data Created'}
+			return Reponse(res, status=status.HTTP_201_CREATED)
+		return Response(res, status = status.HTTP_400_BAD_REQUEST)
 
