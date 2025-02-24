@@ -17,14 +17,14 @@ def get_students(id = None):
     data = json_data.json()
     print(data)
 
-get_students()
+# get_students(1)
 
 
 def post_students():
     data = {
-        'name': 'Rahul',
-        'roll': 108,
-        'city': 'Kolkata'
+        'name': 'Oliva',
+        'roll': 107,
+        'city': 'Chennai'
     }
 
     # Ensure the Content-Type is correctly spelled
@@ -36,7 +36,7 @@ def post_students():
     print(data)
 
 
-# post_students()
+post_students()
 
 
 

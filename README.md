@@ -146,5 +146,7 @@ Function based api_view: CRUD
 
 
 Class based APIView:
-1) create proj drf10, app api 
+1) created proj drf10, app api 
 2) created urls, model, serializer 
+3) created views. Written all CRUD operations using APIView 
+4) Used both my_separate_app, browsable api for testing.
