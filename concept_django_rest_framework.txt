@@ -698,3 +698,53 @@ class studentDestroy(DestroyModelMixin, GenericAPIView):
 		return self.destroy(request, *args, **kwargs) 
  
 
+Concrete API view classes:
+It subclasses GenreicAPIView and relavant Mixins.
+This API type is used when you dont require heavy customized behaviour.
+
+The view classes can be imported from rest_framwork.generics.
+
+class Types:
+- ListAPIView (subclasses GenricAPIView + ListModelMixin)
+- CreateAPIView (subclasses GenricAPIView + CreateModelMixin)
+- RetriveAPIView (subclasses GenricAPIView + RetieveModelMixin)
+- UpdateAPIView (subclasses GenricAPIView + UpdateModelMixin)
+- DestroyAPIView (subclasses GenricAPIView + DestroyModelMixin)
+
+Combined Shortcut classes:
+- ListCreateAPIView
+- RetriveUpdateAPIView
+- RetriveDestroyAPIView
+- RetriveUpdateDestroyAPIView 
+
+
+ListAPIView: 
+It is used for read-only endpoints. It resturns all objects in a queryset.
+It provides a get method handler.
+
+from rest_framework.genrics import ListAPIView
+class StudentList(ListAPIView):
+	queryset = Student.objects.all()
+	serializer_class = StudentSerializer
+
+
+CreateAPIView:
+It is used for create-only endpoints. It provdes a post method handler.
+
+from rest_framework.genrics import CreateAPIView
+class StudentList(CreateAPIView):
+	queryset = Student.objects.all()
+	serializer_class = StudentSerializer
+
+RetrieveAPIView:
+It is used for read-only endpoints for a single model instance.
+It provides get handler method.
+
+UpdateAPIView:
+It is used for update-only endpoints for a single model instance.
+It provide put and patch handler method.
+
+DestroyAPIView:
+It is used for delete-only endpoints for a sigle model instance.
+It provide delete handler method.
+
