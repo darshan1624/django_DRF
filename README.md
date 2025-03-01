@@ -150,3 +150,8 @@ Class based APIView:
 2) created urls, model, serializer 
 3) created views. Written all CRUD operations using APIView 
 4) Used both my_separate_app, browsable api for testing.
+
+
+GenericAPIView & Mixins:
+1) created proj drf11, app api
+2) created model, serializer
