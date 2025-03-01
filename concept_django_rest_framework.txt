@@ -130,7 +130,7 @@ be easily rendered into JSON, XML or other content types which is easily
 understandable by Front End. 
 
 Serializers are also responsible for desrialization which means it allows
-parsed data to be converted back into complex types, after first 
+parsed data to be converted back into complex types, after first 
 validating incoming data.     
 
 Serializer class: 
@@ -540,7 +540,7 @@ which allows you to return content that can be rendered into multiple
 content type, depending on the client request.
 
 Response objects are intialized with data, which should consist of native
-python datatype. REST framework then uses standard HTTP content negotiation 
+python datatype. REST framework then uses statdard HTTP content negotiation 
 to determine how it should render the final response object. 
 
 Reponse(data, status=None, template_name=None, headers=None, 
@@ -695,6 +695,6 @@ class studentDestroy(DestroyModelMixin, GenericAPIView):
 	queryset = Student.objects.all()
 	serializer_class = StudentSerializer
 	def delete(self, request, *args, **kwargs):
-		return self.destroy(self, request, *args, **kwargs) 
+		return self.destroy(request, *args, **kwargs) 
  
 

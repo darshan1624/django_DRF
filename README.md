@@ -155,3 +155,5 @@ Class based APIView:
 GenericAPIView & Mixins:
 1) created proj drf11, app api
 2) created model, serializer
+3) created urls, serializer. Written all CRUD operations using GenericAPIView & Mixins. 
+    Separate class for each CRUD operation. 
