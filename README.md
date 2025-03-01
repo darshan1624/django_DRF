@@ -161,3 +161,6 @@ GenericAPIView & Mixins:
     class seprated on basis of pk. One class uses pk (list, create) and other doesnt (retrive, update, destroy).
 5) Used browsable api for testing.
 
+Concrete API View Classes:
+1) created proj drf12, app api
+2) created model, serializer 
