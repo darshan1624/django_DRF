@@ -162,5 +162,8 @@ GenericAPIView & Mixins:
 5) Used browsable api for testing.
 
 Concrete API View Classes:
-1) created proj drf12, app api
-2) created model, serializer 
+1) Created proj drf12, app api
+2) Created model, serializer 
+3) Created urls, serializer. Written all CRUD operations using Concrete API view classes. 
+4) Finally created 2 classes which are enough to perform all CRUD operations.
+5) Used browsable api for testing. 

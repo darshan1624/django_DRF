@@ -4,5 +4,5 @@ from django.db import models
 
 class Student(models.Model):
     name = models.CharField(max_length=800)
-    roll = models.IntegerField(max_length=800)
+    roll = models.IntegerField()
     city = models.CharField(max_length=800)
