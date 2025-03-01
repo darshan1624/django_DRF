@@ -6,7 +6,7 @@ from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveMode
 from api.models import Student
 from api.serializers import StudentSerilaizer
 
-class StudentList(GenericAPIView, ListModelMixin):
+"""class StudentList(GenericAPIView, ListModelMixin):
     queryset = Student.objects.all()
     serializer_class = StudentSerilaizer
 
@@ -43,4 +43,29 @@ class StudentDestroy(GenericAPIView, DestroyModelMixin):
     serializer_class = StudentSerilaizer
     
     def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)"""
+
+
+class ListCreateStudentApi(GenericAPIView, ListModelMixin, CreateModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerilaizer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+class RetriveUpdateDestroy(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerilaizer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+    

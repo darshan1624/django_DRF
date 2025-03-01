@@ -157,3 +157,7 @@ GenericAPIView & Mixins:
 2) created model, serializer
 3) created urls, serializer. Written all CRUD operations using GenericAPIView & Mixins. 
     Separate class for each CRUD operation. 
+4) Written all CRUD operations using GenericAPIView & Mixins, in 2 different class. 
+    class seprated on basis of pk. One class uses pk (list, create) and other doesnt (retrive, update, destroy).
+5) Used browsable api for testing.
+
