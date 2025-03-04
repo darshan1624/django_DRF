@@ -12,8 +12,10 @@ Types of validations? field level? object level? validators?
 ModelSerializer? How to write ModelSerializer class? Validation in Model Serializer?
 Function based api_view? How to write function based api_view? Request? Requests? request.data? request.method? 
 request.query_parmas? Reponse?
-Class based APIView? How to write class Based APIView?
- 
+Class based APIView, how its diff from dajngo View class? How to write class Based APIView?
+GenericAPIView classes? Mixins? Types of mixin classes?
+Concrete APIView classes? Types ? 
+
 
 
 
@@ -747,4 +749,59 @@ It provide put and patch handler method.
 DestroyAPIView:
 It is used for delete-only endpoints for a sigle model instance.
 It provide delete handler method.
+
+
+
+
+ViewSet:
+Django REST framework allows you to combine the logic for a set of related
+views in a single class, called a ViewSet. Meaning common behaviour such as 
+data to be fetched, created, updated, deleted is handled in single class.
+
+Adavantages of using a ViewSet over a View class? 
+1) Repeated Logic can be combined into a single class. 
+2) By using routers, we no longer need to deal with wiring up the the URL
+   conf overself. 
+
+
+ViewSet class:
+It is a class based View, that doesnot provide handler methods 
+instead provide action methods such as list(), create(), reterive(), 
+update(), destroy(). 
+
+How to write ViewSet Class?
+from rest_framework import viewsets 
+	def list(self, request):
+		..
+	def create(self, request): .. 
+	def reterive(self,request,pk=None): ..
+	def update(self,request,pk=None): ..
+	def partial_update(self,request,pk=None): ..
+	def destory(self,request,pk=None): ..
+
+
+During dispatch, following attributes are available on the ViewSet:
+- basename: The base to use for URL names that are created. 
+- action: the name of the currnet action (e.g. list, create)
+- detail: boolean indicating if the current action is configured for a list 
+or detail view. 
+- suffix: the display suffix for the viewset type - mirrors the detail 
+attribute.
+- name: the display name for the viewset. The arument is mutually exclusive 
+to suffix.
+- description: the display description for the individual view of a viewset. 
+
+
+Router config in Urls for ViewSet:
+from restframework.routers import DefaultRouter 
+
+router= DefaultRouter()
+router.register('studentapi', views.StudentViewSet, basename='student')
+
+urlpatterns= [
+	path('', include(router.urls))
+]
+
+Api urls are determined automatically by the router. 
+
 
