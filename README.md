@@ -175,3 +175,11 @@ Viewset & Router:
 3) Written all CRUD operations using ViewSet. 
 4) created urls.py, written router. 
 5) Used browsable api for testing. 
+
+
+ModelViewSet & ReadOnlyModelViewSet:
+1) Created proj drf14, app api
+2) Created model, serializer
+3) Written all CRUD operations using ModelViewSet, ReadOnlyModelViewSet
+4) created urls.py, written router. 
+5) Used browsable api for testing. 
