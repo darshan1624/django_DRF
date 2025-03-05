@@ -772,7 +772,10 @@ update(), destroy().
 How to write ViewSet Class?
 from rest_framework import viewsets 
 	def list(self, request):
-		..
+		stu = Student.objects.all()
+		serialized_data = StudentSerializer(stu, many=True)
+		return Response(serilaized_data.data, status= satus.HTTP_200_OK)
+
 	def create(self, request): .. 
 	def reterive(self,request,pk=None): ..
 	def update(self,request,pk=None): ..
@@ -815,6 +818,32 @@ e.g.  student_url = reverse('student-detail',
 
 // This will give use url "/student/5/"
 
+
+
+ModelViewSet Class:
+It subclasses GenericAPIView and Mixin classes. 
+The action method provided by the ModelViewSet class are list(), create(),
+retrieve(), update(), partial_update(), destroy(). 
+
+How to write Model ViewSet class?
+from rest_framework import viewsets
+class StudentModelViewSet(viewsets.ModelViewSet):
+	queryset = Student.objects.all()
+	serializer_class = StudentSerializer 
+
+// Register StudentModelViewSet with router
+
+
+ReadOnlyModelViewSet Class:
+The ReadOnlyModelViewSet class also subclasses GenericAPIView. But unlike 
+ModelViewSet it only include inplementation for read_only actions like 
+list(), retrieve().
+
+How to write ReadOnlyModelViewSet:
+from rest_framework import viewsets
+class StudentReadOnlyModelViewSet(views.ReadOnlyModelViewSet):
+	queryset = Student.objects.all()
+	serilaizer_class = StudentSerializer 
 
 
 
