@@ -783,13 +783,17 @@ from rest_framework import viewsets
 During dispatch, following attributes are available on the ViewSet:
 - basename: The base to use for URL names that are created. 
 - action: the name of the currnet action (e.g. list, create)
-- detail: boolean indicating if the current action is configured for a list 
-or detail view. 
-- suffix: the display suffix for the viewset type - mirrors the detail 
-attribute.
-- name: the display name for the viewset. The arument is mutually exclusive 
-to suffix.
-- description: the display description for the individual view of a viewset. 
+- detail: boolean indicating if the current action is configured for a 
+list or detail view. When using pk its set to True, else False. 
+- suffix: It is used to show title in browsable api page, to help 
+developer understand what each view does. 
+- name: the display name for the viewset. It is prefix to suffix attribute.
+- description: Just for code documentation its used. 
+
+
+Router: 
+Router automatically genrates url patterns for your Viewset. This means you
+dont have to write repetitive url patterns for your standard CRUD opertaions. 
 
 
 Router config in Urls for ViewSet:
@@ -803,5 +807,14 @@ urlpatterns= [
 ]
 
 Api urls are determined automatically by the router. 
+
+
+//basename is used for reverse Url lookups.
+e.g.  student_url = reverse('student-detail', 
+			kwargs={'pk': 1})
+
+// This will give use url "/student/5/"
+
+
 
 
