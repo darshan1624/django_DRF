@@ -190,3 +190,4 @@ BasicAuthentication & Permissions:
 2) Created model, serializer
 3) Written all CRUD operations using ModelViewSet
 4) created urls.py, written router. 
+5) implemented BasicAuthentication and Permissions(AllowAny, IsAutheticated)
