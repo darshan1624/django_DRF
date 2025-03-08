@@ -899,7 +899,6 @@ classes. e.g.:  permission_classes = [IsAuthenticated, IsAdminUser]
 - IsAuthenticatedOrReadOnly
 - DjanoModelPermissions
 - DjangoModelPermissionsOrAnonReadOnly
-- DjangoObjectPermissions
 - CustomPermissions
 
 
@@ -941,6 +940,69 @@ REST_FRAMEWORK = {
 	'DEFAULT_PERMISSIONS_CLASSES':['rest_framework.permissions.
 						IsAuthenticated']
 }
+
+
+SessionAuthentication:
+-This Authentication scheme uses Djangos default session for authentication. 
+-If successfully authenticated, sessionAuthentication provide following 
+credentials: 
+request.user //will be django User instance 
+request.auth //will be None
+
+-If the sessionAuthentication fails then request wont have valid creadentials 
+and permssions will be denied.
+-This results into HTTP 403 Forbidden response. 
+
+
+//Unlike BasicAuthentication, SessionAuthentication does not provide prompt
+//for username and password.
+To loginin from browsable api we will use rest_framworks built in urls.
+Within urls write: 
+path('auth', include('rest_framework.urls')) 
+
+
+IsAuthenticatedOrReadOnly:
+This permission scheme will allow authenticated users to perform any request.
+Resquests from unauthenticated users will only be permitted if the request 
+if one of the "safe" methods (GET, HEAD OR OPTIONS).
+
+This permission is suitable if you want your api to allow read permissions to 
+anonymous users, and only write permissions to authenticated users. 
+
+
+DjangoModelPermissions:
+This permsision scheme is tied up with django.contrib.auth model permissions.
+Permission will only be granted if the user iauthenticated and have the 
+releavant model pemrissions.
+
+POST requests require the user to have the add permissions on the model.
+PUT and PATCH requests require the user to have the change permission on the 
+model. 
+DELETE request require the user to have the delete pemission on the model. 
+
+// We can give model permsision by login in admin and from Users section 
+// can provide user relavant model permissions.
+
+This permission is more powerful, it can restrict specific user from 
+permitting any model permsission. 
+
+
+DjangoModelPermissionsOrAnonReadOnly:
+This permission scheme allows autheticated users to perform any request.
+Requests from unauthticated users will only be permitted if the requet if 
+on of the 'safe' methods('GET', 'HEAD' OR 'OPTIONS').
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
