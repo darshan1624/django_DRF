@@ -5,11 +5,12 @@ from rest_framework import viewsets
 from api.models import Student
 from api.serializer import StudentSerialzier
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly, DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
+
+from api.custom_permission import CustomPermission
 
 class StudentModelViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerialzier
 
     authentication_classes = [SessionAuthentication]
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = [CustomPermission]

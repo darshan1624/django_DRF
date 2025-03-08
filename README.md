@@ -199,3 +199,6 @@ SessionAuthentication & Permissions:
 
 Custom Permission:
 1) Created proj drf17 (Replicated proj drf15, app api)
+2) Used DRF urls for login via browsable api. 
+3) created separate file custompermission.py file 
+4) overide BasePermission to create custom permssion and used has_permission().
