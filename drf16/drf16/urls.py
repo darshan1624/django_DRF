@@ -25,5 +25,6 @@ router.register('studentapi', views.StudentModelViewSet, basename='student')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('login', include('rest_framework.urls'))
 ]

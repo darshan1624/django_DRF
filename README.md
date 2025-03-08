@@ -194,3 +194,5 @@ BasicAuthentication & Permissions:
 
 SessionAuthentication & Permissions:
 1) Created proj drf16 (Replicated proj drf15, app api)
+2) Used DRF urls for login via browsable api. 
+3) implemented SessionAuthentication and Permissions(IsAutheticatedOrReadOnly, DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly).
