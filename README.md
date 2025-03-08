@@ -183,3 +183,10 @@ ModelViewSet & ReadOnlyModelViewSet:
 3) Written all CRUD operations using ModelViewSet, ReadOnlyModelViewSet
 4) created urls.py, written router. 
 5) Used browsable api for testing. 
+
+
+BasicAuthentication & Permissions:
+1) Created proj drf15, app api
+2) Created model, serializer
+3) Written all CRUD operations using ModelViewSet
+4) created urls.py, written router. 
