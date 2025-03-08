@@ -845,5 +845,103 @@ class StudentReadOnlyModelViewSet(views.ReadOnlyModelViewSet):
 	queryset = Student.objects.all()
 	serilaizer_class = StudentSerializer 
 
+Why use Authentication & Permisssion?
+Currently our API doesnt have any restrictions on who can edit or delete
+data.
+Adding Aunthetication and Permisssion make sure that:
+- Only authenticated users may create data. 
+- Only the creator of a data may update or delete it. 
+- Unauthenticated requests should have full read-only access.
+
+Authentication:
+Authentication is the meachanism of associting incoming request with as set 
+of indetifying credentials, such as user from request came from, or the
+token that it was signed with. The permission and throttling policies can 
+then use those credentials to determine if the request should be permited. 
+
+Authentication is always run at the very start of the view, before the
+permission and throttling checks occur, and before any other code is
+allowed to execute.
+
+Rest framework provides a number of authentication schemes:
+-BasicAuthentication
+-SessionAuthentication
+-TokenAuthentication
+-RemoteUserAuthetication
+-Custom authetication
+
+BasicAuthentication: 
+-BasicAuthentication cross checks username and password.
+-Appropriate for testing not for productionising.
+-If the user is successfully autheticated, Basic Authetication provides the 
+following crendentials:
+request.user //will be django User instance 
+request.auth //will be None
+
+-If basic authentication fails, then request wont have valid credentials and 
+permissions will be denied.
+-This results into HTTP 401 Unauthorised response.
+
+
+Permissions:
+Permissions help control which users can access which API endpoints or views.
+Perissions checks are always performed at the very start after 
+authentication done.
+Permission checks uses authentication information like request.user and 
+request.auth properties to determine if incoming request to be permitted. 
+
+Permission classes: 
+Permission in in views are always defined as a list of permission
+classes. e.g.:  permission_classes = [IsAuthenticated, IsAdminUser]
+- AllowAny
+- IsAuthenticated
+- IsAdminUser
+- IsAuthenticatedOrReadOnly
+- DjanoModelPermissions
+- DjangoModelPermissionsOrAnonReadOnly
+- DjangoObjectPermissions
+- CustomPermissions
+
+
+AllowAny:
+The AllowAny permission class will allow unrestricted access, regardless of 
+if the request is authenticated or unauthenticated. 
+You can accheive the same result by using the empty permission list, but
+using this just makes the intention clear.
+
+IsAuthenticated:
+IsAuthenticated will deny permission to any unauthenticated user.
+This permission is suitable if you want your API to only be accessible to 
+registerd users.
+
+IsAdminUser:
+IsAmdinUser class will deny permissions to any user, unless user.is_staff is 
+True. 
+This permission is suitable if you want your API to only be accessible to 
+a subset of trusted adminstartors. 
+
+
+types of users: 
+-normal user
+-admin user(staff status == True)
+-superuser(staff status == True, super status = True)
+
+How to apply authentication and permission in classs? 
+from rest_framework.authetication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated 
+class StudentModelViewSet(viewsets.ModelViewSet):
+	authentication_classes = [BasicAuthentication]
+	permission_classes = [IsAuthenticated]
+	..
+
+How to define globally if you have multiple view classes? 
+REST_FRAMEWORK = {
+	'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.
+						BasicAuthentication'],
+	'DEFAULT_PERMISSIONS_CLASSES':['rest_framework.permissions.
+						IsAuthenticated']
+}
+
+
 
 
