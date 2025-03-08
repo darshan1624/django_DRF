@@ -993,6 +993,32 @@ Requests from unauthticated users will only be permitted if the requet if
 on of the 'safe' methods('GET', 'HEAD' OR 'OPTIONS').
 
 
+Custom Permissions:
+To implement custom pemrissions overide BasePermission and implement either,
+or both of the following methods:
+- has_permission(self, request, view)
+- has_object_permission(self, request, view, obj)
+
+This method must return True if the request should be granted access and
+False otherwise.
+
+How to write custom Permissions?
+create a seprate file custompermissions.py in app.
+from rest_framework.permissions import BasePermission
+
+class MyPermission(BasePermission):
+	def has_permission(self,request,view):
+		if request.method == 'GET':
+			return True
+		else: 
+			return False
+
+giving only get request access.
+
+
+
+
+
 
 
 
