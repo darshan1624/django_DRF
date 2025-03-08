@@ -191,3 +191,6 @@ BasicAuthentication & Permissions:
 3) Written all CRUD operations using ModelViewSet
 4) created urls.py, written router. 
 5) implemented BasicAuthentication and Permissions(AllowAny, IsAutheticated)
+
+SessionAuthentication & Permissions:
+1) Created proj drf16 (Replicated proj drf15, app api)
