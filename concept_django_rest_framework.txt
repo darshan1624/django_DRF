@@ -1028,23 +1028,88 @@ from rest_framework.permissions import IsAuthenticated
 def studentapi(request, pk = None):
 	if request.method == 'GET':
 		..
- 
+
+Token Authentication:
+This authentication scheme uses simple token-based HTTP authentication.
+To use the TokenAuthentication include it in authetication classes inside
+view.
+Additionally include rest_framework.authtoken in your installed_apps 
+settings.py
+	Installed_apps = [ 'rest_framework.authtoken' ]
+
+Make sure to run migrate after change in settings.py, as .authtoken
+provide migrations to create Token Table.
+
+If successfully authenticated, TokenAuthentication provides the following
+credentials.
+request.user will be a Django User instance.
+request.auth will be rest_framework.authtoken.models.token instance
+
+-If the TokenAuthentication fails then request wont have valid creadentials 
+and permssions will be denied.
+-This results into HTTP 401 Unauthorized response. 
+
+To use tokenAuthentication we require token.
+
+How to Generate Token ?
+- Using Admin Application
+    After migartion Token table is create. Via admin panel can easily
+    create token.
+- Using Django manage.py command
+    python manage.py drf_create_token username
+- By exposing an API endpoint
+    With this user himself can create his token and can use the api.
+- Using Signals 
+	when you create user it creates token at the same time.
+	Implementation skipped for now.
+
+How to Generate Token: By exposing an API endpoint?
+User obtain a token by providing username and password.
+REST framework provides obtain_auth_token built-in view to provide this 
+behaviour.
+How to use obtain_auth_token view? 
+from rest_framework.authtoken.views import obtain_auth_token
+urlpatterns = [
+	path('gettoken/', obtain_auth_token)
+]
+
+obtain_auth_token will return JSON_response when valid username and password
+is given.
+e.g.: 
+http POST http://127.0.0.1:8000/gettoken/ username='name' password='pass'
 
 
+//can also use CustomAuthToken class from django documentaion, uses same 
+obtain_auth_token.
 
 
+HTTPie
+HTTPie is a commandline tool. Its goal is to make command line 
+interaction with web services. 
+It provide http command which allows sending HTTP requests using simple
+syntax.
+HTTPie can be used for testing, debugging and generally interacting with 
+HTTP server.
 
+syntax: http [flags] [METHOD] URL [ITEM [ITEM]]
 
+- pip install httpie
 
+GET Request:
+http http://127.0.0.1:8000/studentapi/
 
+GET Request with Auth
+http http://127:0.0.1:8000/studentapi/'Authroization:Token 621hbvdjsbvjak'
 
+POST Request
+http -f POST http://127:0.0.1:8000/studentapi/ name=Jay roll=104 city=Dhanbad
+'Authroization:Token 621hbvdjsbvjak'
 
+PUT Request
+http PUT http://127:0.0.1:8000/studentapi/4/ name=Amit roll=105 city=Dhanbad
+'Authroization:Token 621hbvdjsbvjak'
 
-
-
-
-
-
-
+DELETE Request
+http DELETE http://127:0.0.1:8000/studentapi/4/ 'Authroization:Token 621hbvdjsbvjak'
 
 
