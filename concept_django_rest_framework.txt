@@ -1099,17 +1099,18 @@ GET Request:
 http http://127.0.0.1:8000/studentapi/
 
 GET Request with Auth
-http http://127:0.0.1:8000/studentapi/'Authroization:Token 621hbvdjsbvjak'
+http http://127:0.0.1:8000/studentapi/ Authroization:"Token 621hbvdjsbvjak"
 
 POST Request
 http -f POST http://127:0.0.1:8000/studentapi/ name=Jay roll=104 city=Dhanbad
-'Authroization:Token 621hbvdjsbvjak'
+	Authroization:"Token 621hbvdjsbvjak"
 
 PUT Request
 http PUT http://127:0.0.1:8000/studentapi/4/ name=Amit roll=105 city=Dhanbad
-'Authroization:Token 621hbvdjsbvjak'
+	Authroization:"Token 621hbvdjsbvjak"
 
 DELETE Request
-http DELETE http://127:0.0.1:8000/studentapi/4/ 'Authroization:Token 621hbvdjsbvjak'
+http DELETE http://127:0.0.1:8000/studentapi/4/ 
+	Authorization:"Token 621hbvdjsbvjak"
 
 

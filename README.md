@@ -202,3 +202,10 @@ Custom Permission:
 2) Used DRF urls for login via browsable api. 
 3) created separate file custompermission.py file 
 4) overide BasePermission to create custom permssion and used has_permission().
+
+
+TokenAuthetication:
+1) Created proj drf18 (Replicated proj drf17, app api)
+2) Created Token using AdminPanel
+3) Used TokenAuthtication 
+4) Sent http request using httpie commandline tool.
