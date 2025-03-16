@@ -209,3 +209,9 @@ TokenAuthetication:
 2) Created Token using AdminPanel
 3) Used TokenAuthtication 
 4) Sent http request using httpie commandline tool.
+
+
+Simple JSON Web Token (JWT) Authetication:
+1) created proj drf19, app api
+2) installed pip install djangorestframework-simplejwt
+3) created model, serializer, used router, implemented crud without authetication and permissions.
