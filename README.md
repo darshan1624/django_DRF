@@ -215,3 +215,14 @@ Simple JSON Web Token (JWT) Authetication:
 1) created proj drf19, app api
 2) installed pip install djangorestframework-simplejwt
 3) created model, serializer, used router, implemented crud without authetication and permissions.
+4) configure jwt Authentication in settings .py bu including rest_framework_simplejwt
+5) set up urls.py 
+    use TokeObtainPairView, TokenRefereshView, TokenVerifyView
+6) implement authetication and permissions in views.py
+7) test using httpie 
+    - genrate token 
+    - verify token 
+    - refresh token 
+    - send get, post ,put, delete http request using httpie
+
+    

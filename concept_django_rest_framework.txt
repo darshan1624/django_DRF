@@ -1168,13 +1168,13 @@ SIMPLE_JWT = {
 How to use JWT?
 syntax: http [flags] [METHOD] URL [ITEM [ITEM]]
 GET Token
-http POST http://127.0.0.1:8000/gettoken/ username='Amit' password='1234'
+http POST http://127.0.0.1:8000/gettoken/ username=Amit password=1234
 
 Verify Token
-http POST http://127.0.0.1:8000/verifytoken/ token="jvdnvldnslkvndksnvkndsn"
+http POST http://127.0.0.1:8000/verifytoken/ token=jvdnvldnslkvndksnvkndsn
 
 Refresh Token
-http POST http://127.0.0.1:8000/refreshtoken/ refresh="mvsmvdsvdsnvdsnvdnk"
+http POST http://127.0.0.1:8000/refreshtoken/ refresh=mvsmvdsvdsnvdsnvdnk
 
 Flow: 
 You will do gettoken when user is registered and want to access an API.
@@ -1201,16 +1201,16 @@ Its divided into three parts.
 
 How to make HTTP request to server?
 GET:
-http http://127.0.0.1:8000/studntapi/ 'Authorisation:Bearer bjdsfjdwnwdjfsjk'
+http http://127.0.0.1:8000/studntapi/ "Authorization:Bearer bjdsfjdwnwdjfsjk"
 POST:
-http -f POST http://127:0.0.1:8000/studentapi/ name='Amit' roll=101 
-	city='Mumbai' 'Authorisation:Bearer dsvcjdsnvdnslnvdslnjdbvd'
+http -f POST http://127:0.0.1:8000/studentapi/ name=Amit roll=101 
+	city=Mumbai "Authorization:Bearer dsvcjdsnvdnslnvdslnjdbvd"
 
 PUT: 
-http -f PUT http://127:0.0.1:8000/studentapi/2 name='Anket' roll=102 
-	city='Mumbai' 'Authorisation:Bearer dsvcjdsnvdnslnvdslnjdbvd'
+http -f PUT http://127:0.0.1:8000/studentapi/2 name=Anket roll=102 
+	city=Mumbai "Authorization:Bearer dsvcjdsnvdnslnvdslnjdbvd"
 DELETE:
-http -f DELETE http://127:0.0.1:8000/studentapi/2 'Authorisation:Bearer dsvcjdsnvdnslnvdslnjdbvd'
+http -f DELETE http://127:0.0.1:8000/studentapi/2 'Authorization:Bearer dsvcjdsnvdnslnvdslnjdbvd'
 
 
 
