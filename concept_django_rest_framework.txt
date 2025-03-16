@@ -10,6 +10,7 @@ Deserialization? flow? io.BytesIO, streamdata? JSONParser? serializer.is_valid()
 Class Based View?, How to write URL for class Based view?
 Types of validations? field level? object level? validators? 
 ModelSerializer? How to write ModelSerializer class? Validation in Model Serializer?
+
 Function based api_view? How to write function based api_view? Request? Requests? request.data? request.method? 
 request.query_parmas? Reponse?
 Class based APIView, how its diff from dajngo View class? How to write class Based APIView?
@@ -771,6 +772,7 @@ update(), destroy().
 
 How to write ViewSet Class?
 from rest_framework import viewsets 
+class StudentViewSet(viewsets.ViewSet):
 	def list(self, request):
 		stu = Student.objects.all()
 		serialized_data = StudentSerializer(stu, many=True)
@@ -1112,5 +1114,103 @@ http PUT http://127:0.0.1:8000/studentapi/4/ name=Amit roll=105 city=Dhanbad
 DELETE Request
 http DELETE http://127:0.0.1:8000/studentapi/4/ 
 	Authorization:"Token 621hbvdjsbvjak"
+
+
+
+JSON Web Token Authentication:
+It is a third party package and not provided by DRF.
+It can be used for token based Authentication.
+Unlike builtin TokenAuthentication JWT Authentication doesnt need to use a 
+database to validate token.
+
+Earlier whenever user made HTTP request token was validated by querying with
+db. Which can created performance issues when we have multiple users. 
+
+Simple JWT:
+It provides a JSON web Token authentication backend for DRF.
+
+pip install djangorestframework-simplejwt
+
+How to configure Simple JWT?
+Settings.py
+// Globally setup
+REST_FRAMEWORK = {
+	'DEFAULT_AUTHENTICATION_CLASSES: 
+	    ('rest_framework_simplejwt.authentication.JWTAuthentication')
+}
+
+//locally setup in views.py
+from rest_frmawork_simplejwt.authentication import JWTAuthentication
+authentication_classes = [JWTAuthentication]
+
+urls.py
+from rest_framework_simplejwt.views import TokenObtainPairView, 
+			TokenRefreshView, TokenVerifyView
+
+urlpatterns = [
+     path('gettoken/', TokenObtainView.as_view(), name='token_obtain_pair'),
+     path('refreshtoken/', TokenRefreshView.as_view(), name='refresh_token'),
+     path('verifytoken/', TokenVerify.as_view(), name='verify_token')
+
+]
+
+JWT Default Settings:
+settings.py
+from datetime import timedelta
+SIMPLE_JWT = {
+	'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5), 
+	'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+	'ROTATE_REFRESH_TOKENS': False, 
+	//when set True it rgenerates both new access, refersh token
+	// otherwise genrate only access token.
+}
+
+How to use JWT?
+syntax: http [flags] [METHOD] URL [ITEM [ITEM]]
+GET Token
+http POST http://127.0.0.1:8000/gettoken/ username='Amit' password='1234'
+
+Verify Token
+http POST http://127.0.0.1:8000/verifytoken/ token="jvdnvldnslkvndksnvkndsn"
+
+Refresh Token
+http POST http://127.0.0.1:8000/refreshtoken/ refresh="mvsmvdsvdsnvdsnvdnk"
+
+Flow: 
+You will do gettoken when user is registered and want to access an API.
+But since we are using JWT he need to genrate token.
+to genrate token he will make request to gettoken with username and password.
+This will return access, refresh token.
+Now suppose access token gets expired after 5 mins then genrate new access
+token with help of refersh token.
+ 
+
+Access token structure:
+Its divided into three parts. 
+- Header  //contains type of token Authetication used and algorithm 
+	e.g.: {type:'jwt', alg:'HS256'}
+- Payload
+	e.g.: {
+		token_type: 'access',	//type of token 
+		exp_date: 20/12/24,     //expiry date for token
+		jti: 'hdjvkbdsjbvdkjs', //unique id for token 		
+		user_id: 2 //user for whom token is genrated
+	}
+- Signature //gives encoding information
+
+
+How to make HTTP request to server?
+GET:
+http http://127.0.0.1:8000/studntapi/ 'Authorisation:Bearer bjdsfjdwnwdjfsjk'
+POST:
+http -f POST http://127:0.0.1:8000/studentapi/ name='Amit' roll=101 
+	city='Mumbai' 'Authorisation:Bearer dsvcjdsnvdnslnvdslnjdbvd'
+
+PUT: 
+http -f PUT http://127:0.0.1:8000/studentapi/2 name='Anket' roll=102 
+	city='Mumbai' 'Authorisation:Bearer dsvcjdsnvdnslnvdslnjdbvd'
+DELETE:
+http -f DELETE http://127:0.0.1:8000/studentapi/2 'Authorisation:Bearer dsvcjdsnvdnslnvdslnjdbvd'
+
 
 
