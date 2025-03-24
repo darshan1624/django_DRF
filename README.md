@@ -225,4 +225,10 @@ Simple JSON Web Token (JWT) Authetication:
     - refresh token 
     - send get, post ,put, delete http request using httpie
 
+
+Throttling
+1) create proj drf20, app api 
+2) Implemented crud using Viewset. Using SessionAuthentication, IsAuthenticated authentication and permissions.
+3) Used include('rest_framework.urls') in urls.py to login. 
+
     
