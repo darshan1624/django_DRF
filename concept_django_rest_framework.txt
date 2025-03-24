@@ -1213,4 +1213,78 @@ DELETE:
 http -f DELETE http://127:0.0.1:8000/studentapi/2 'Authorization:Bearer dsvcjdsnvdnslnvdslnjdbvd'
 
 
+Throttling: 
+Throttling is used to control rate of requests that client can make to an 
+API.
+Your API might have restrictive throttle for unauhenticated requests and less 
+restrictive throttle for authenticated requests.
 
+
+How to configure throttling in settings.py?
+REST_FRAMEWORK = {
+	'DEFAULT_THROTTLE_CLASSES':[
+		'rest_framework.throttling.AnonRateThrottle',
+		'rest_framework.throttling.UserRateThrottle',
+	],
+	
+	'DEFAULT_THROTTLE_RATES':[
+		'anon':'100/day',
+		'user':'1000/day',
+	]
+}
+
+throttling classes:
+AnonRateThrottle
+It will throttle against unauthenticated requests.
+The IP address is used to generate a throttle key whom against throttle is 
+performed.
+The rate of requests can be defined using one of the following way:
+-By overidding AnonRateThrottle class. Done by creating another class 
+ and setting rate e.g.: 
+	from rest_framework.throttling import AnonRateThrottle
+	class CustomAnonRateThrottle(AnonRateThrottle):
+	    rate = '10/min' 
+	
+	// this is 1st method to override. Another is write scope e.g.: 
+	// scope = 'jack' then define jack rate limit in settings.py 
+		DEFAULT_THOTTLE_RATES:{
+		'jack' : '5/min'
+		}
+
+-By configuring dafault setting in setings.py. e.g.:
+	DEFAULT_THOTTLE_RATES:{
+		'anon' : '10/min'
+}
+
+UserRateThrottle
+It will throttle against users with give rate of request.
+For authenticated users user_id is used to form throttle key and for
+unauthenticated users ip_address is used to form throttle key.
+The rate of requests can be defined using one of the following way:
+-By overidding AnonRateThrottle class.
+-By configuring dafault setting in setings.py.
+
+ScopedRateThrottle
+It will throttle against specific part of an api.
+The throttle is performed only if the view contains throttle_scope property.
+The scope of the view and ipaddress or user_id is used to generate throttle
+key.
+The rate of request can be defined using throttle_scope.
+
+How to implement trottling?
+Just like permission classes you can define thottle classes and rate of 
+request can be overidden or deined in settings.py.
+ 
+from rest_framework.throttling import ScopedRateThrottle
+from rest_framework.generics import ListAPIView
+class GETStudentData(ListAPIView):
+	query_set = Student.objects.all()
+	serializer_class = StudentSerializer
+	throttle_classes = [ScopedRateThrottle]
+	throttle_scope = 'get_data_scope' 
+
+REST_FRAMEWORK = {
+	'DEFAULT_THROTTLE_RATES':{
+		'get_Data_scope': '2/day'
+	}
+}
