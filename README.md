@@ -226,9 +226,11 @@ Simple JSON Web Token (JWT) Authetication:
     - send get, post ,put, delete http request using httpie
 
 
-Throttling
+Throttling:
 1) create proj drf20, app api 
 2) Implemented crud using Viewset. Using SessionAuthentication, IsAuthenticated authentication and permissions.
 3) Used include('rest_framework.urls') in urls.py to login. 
-
+4) Used AnonRateThrottle. Set api rate limit in settings.py.
+5) Used UserRateThrottle. Set api rate limit in settings.py.
+6) created CustomRateThrottle by overridding UserRateThrotte in seprate file customThrottling.py in api app.
     
