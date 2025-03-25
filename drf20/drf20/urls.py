@@ -19,12 +19,17 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from api import views
 
-router = DefaultRouter()
+"""router = DefaultRouter()
 
-router.register('studentapi', views.StudentViewSet, basename='studentapi')
+router.register('studentapi', views.StudentViewSet, basename='studentapi')"""
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    # path('', include(router.urls)),
+    path('studentapi/', views.ListStudentApi.as_view(), name='listapi'),
+    # path('studentapi/', views.CreateStudentApi.as_view(), name='listapi'),
+    path('studentapi/<int:pk>/', views.RetriveStudentApi.as_view(), name='listapi'),
+    # path('studentapi/<int:pk>/', views.UpdateStudentApi.as_view(), name='listapi'),
+    # path('studentapi/<int:pk>/', views.DestroyStudentApi.as_view(), name='listapi'),
     path('login/', include('rest_framework.urls'))
 ]

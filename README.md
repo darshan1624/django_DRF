@@ -233,4 +233,5 @@ Throttling:
 4) Used AnonRateThrottle. Set api rate limit in settings.py.
 5) Used UserRateThrottle. Set api rate limit in settings.py.
 6) created CustomRateThrottle by overridding UserRateThrotte in seprate file customThrottling.py in api app.
-    
+7) Implmented CRUD using ConcreteAPIView.
+8) Used ScopedRateThrottle to set differnt rate limit to differnt views of api.

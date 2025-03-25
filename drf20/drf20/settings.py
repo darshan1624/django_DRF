@@ -129,5 +129,6 @@ REST_FRAMEWORK = {
         'anon': '2/day',
         'user': '5/day',
         'jack': '1/day',
+        'list_retrive_api': '2/day',
     }
 }
