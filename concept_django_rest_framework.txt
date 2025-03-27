@@ -1262,7 +1262,10 @@ For authenticated users user_id is used to form throttle key and for
 unauthenticated users ip_address is used to form throttle key.
 The rate of requests can be defined using one of the following way:
 -By overidding AnonRateThrottle class.
--By configuring dafault setting in setings.py.
+-By configuring dafault setting in setings.py. e.g.:
+	DEFAULT_THOTTLE_RATES:{
+		'user' : '10/min'
+}
 
 ScopedRateThrottle
 It will throttle against specific part of an api.
@@ -1271,20 +1274,138 @@ The scope of the view and ipaddress or user_id is used to generate throttle
 key.
 The rate of request can be defined using throttle_scope.
 
-How to implement trottling?
-Just like permission classes you can define thottle classes and rate of 
+How to implement trottling using AnonRateThrottle and UserRateThrottle? 
+-Just like permission classes you can define thottle classes and rate of 
 request can be overidden or deined in settings.py.
+
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from rest_framework import view_sets
+class StudentAPIViewSet(viewsets.ViewSet):
+	query_set = Student.objects.all()
+	serializer_class = StudentSerializer
+	throttle_classes = [AnonRateThrottle, ScopedRateThrottle]
+
+REST_FRAMEWORK = {
+	'DEFAULT_THROTTLE_RATES':{
+		'anon': '2/day',
+		'user': '2/day'
+	}
+}
  
+
+How to implement trottling using ScopedRateThrottle? 
 from rest_framework.throttling import ScopedRateThrottle
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 class GETStudentData(ListAPIView):
 	query_set = Student.objects.all()
 	serializer_class = StudentSerializer
 	throttle_classes = [ScopedRateThrottle]
 	throttle_scope = 'get_data_scope' 
 
+class CreateStudentData(CreateAPIView):
+	query_set = Student.objects.all()
+	serializer_class = StudentSerializer
+	throttle_classes = [ScopedRateThrottle]
+	throttle_scope = 'create_data_scope' 
+
+
 REST_FRAMEWORK = {
 	'DEFAULT_THROTTLE_RATES':{
-		'get_Data_scope': '2/day'
+		'get_Data_scope': '4/day'
+		'create_data_scope': '2/day'
 	}
 }
+
+
+
+Filtering: 
+The simplest way to filter the query_Set of any view that subclasses
+GenericAPIView is to override the get_queryset() method.
+
+When to use filtering? 
+Suppose there is college website and each teacher have a separate portal to 
+uplaod marks of his students.so, when teacher logins he must see only his 
+student marks. 
+So, in backend the query set must be filter out particular subject student 
+marks.
+
+Other examples: 
+There is shopping website and each seller has a separate portal. In which he 
+must see only those items he has pblished. 
+ 
+With get_queryset(self) we can apply filter on records.
+
+How to implement get_queryset() method?
+-suppose have Student(id,name,roll,city,passby) table. passby will have
+teacher name who passed student in her subject. 
+We have to filter records to specific subject for the teacher logged in.
+
+from rest_framework.generics import ListAPIView
+class StudentListView(ListAPIView):
+	queryset = Student.Objects.all()
+	serializer_class = StudentSerialzier
+	def get_queryset(self):
+		user = self.request.user
+		return Student.objects.filter(passby=user)
+
+
+- Wrong method
+class StudentListView(ListAPIView):
+	user = request.user
+	queryset = Student.Objects.filter(passby=user)
+
+- you cant do this to filter records for multiple reasons: 
+- this way queryset will be deined only once during class intilaisation 
+  and wont chnage when new api request is made. But get_queryset(self) is 
+  triggered for every new rquest.
+- request.user is not accessible directly like this. 
+ correct way to access request.user ? 
+ To access request.user
+ override get method
+	 def get(self, request, *args, **kwargs):
+		user = self.request.user
+ can also overide get_queryset like above to access self.request.user
+
+GenericFiltering:
+REST framework also includes support for generic filtering backend that 
+allows you to easily construct complex searches and filters.
+
+DjangoFilterBackend
+The django-filter library includes a DjangoFilterBackend class which supports
+highly customizable field filtering for REST framework.
+
+How to cofigure django-filter library 
+pip install django-filter 
+
+INSTALLED_APPS = [
+	'django_filters',
+]
+
+Gloabal setting:
+REST_FRAMEWORK = {
+	'DEFAULT_FILTER_BACKENDS':
+	['django_filter.rest_framework.DjangoFilterBackend']
+}
+
+- You can set the filter backends on a per_view, or per_viewset basis.
+
+How to use DjangoFilterBackend in view?
+from django_filters.rest_framework import DjangoFilterBackend
+class StudentListView(ListAPIView):
+	queryset = Student.Objects.all()
+	serializer_class = StudentSerializer
+	filter_backends = [DjangoFilterBackend]
+
+- If you want to perform simple equality based filtering, you can set 
+filter_fields attribute and include fileds in list which you want to filter
+against. e.g.:
+	filterset_fields = ['name', 'city']
+
+
+How the request must come to apply filter?
+http://127.0.0.1:8000/studentapi/?name=Amit&city=Mumbai
+
+
+
+
+
