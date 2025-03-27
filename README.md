@@ -235,3 +235,8 @@ Throttling:
 6) created CustomRateThrottle by overridding UserRateThrotte in seprate file customThrottling.py in api app.
 7) Implmented CRUD using ConcreteAPIView.
 8) Used ScopedRateThrottle to set differnt rate limit to differnt views of api.
+
+
+Filtering:
+1) create proj drf21, app api 
+2) Implemented get operation using ListAPIView. 
