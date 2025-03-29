@@ -238,5 +238,12 @@ Throttling:
 
 
 Filtering:
-1) create proj drf21, app api 
+1) create proj drf21, app api, created a model Student(id,name,roll,city,passby) 
 2) Implemented get operation using ListAPIView. 
+3) pip install django-filter
+3) Used DjangoFilterBackend in ListAPIView and filterset_fileds = [] to filter records from queryset. 
+    filterset_fields = ['passby', 'city'].
+    perform equality field filtering. 
+    http://127.0.0.1:8000/studentapi/?passby=Amit&city=Mumbai
+4) globally set DjangoFilterBacken.
+5) Also, seen how to override get_queryset(self) method. 
