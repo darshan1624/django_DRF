@@ -247,3 +247,16 @@ Filtering:
     http://127.0.0.1:8000/studentapi/?passby=Amit&city=Mumbai
 4) globally set DjangoFilterBacken.
 5) Also, seen how to override get_queryset(self) method. 
+
+
+SearchFilter:
+1) created proj drf22, app api,  created a model Student(id,name,roll,city,passby) 
+2) Implemented get operation using ListAPIView. 
+3) Used SearchFilter in ListAPIView and search_fields = [] to filter records from queryset. 
+        search_fields = ['name', 'city'].
+        perform search_field filtering. 
+        http://127.0.0.1:8000/studentapi/?search=Amit
+        will check in both (icontains) fields name and city
+4) Used orderingFilter in ListAPIView and ordering_fields = [] to filter records from queryset. 
+
+ 
