@@ -260,3 +260,11 @@ SearchFilter:
 4) Used orderingFilter in ListAPIView and ordering_fields = [] to filter records from queryset. 
 
  
+Pagination:
+1) created proj drf23, app api,  created a model Student(id,name,roll,city,passby) 
+2) Implemented get operation using ListAPIView. 
+3) Implemented diff pagination style 
+    - PageNumberPagination
+    - LimitOffsetPagination
+    - CursorPagination
+    
