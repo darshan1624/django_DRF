@@ -1406,6 +1406,155 @@ How the request must come to apply filter?
 http://127.0.0.1:8000/studentapi/?name=Amit&city=Mumbai
 
 
+SearchFilter
+The SearchFilter class supports single query parameter based 
+searching.
+If you want to perform SearchFilter, you can set search_fields attribute
+and include fields in list which you want to filter against.
+
+How to use SearchFilter? 
+from rest_framework.filters import SearchFilter
+class StudentListView(ListAPIView):
+	queryset = Student.Objects.all()
+	serializer_class = StudentSerializer
+	filter_backends = [SearchFilter]
+	search_fields = ['name','city']
+
+How the request must come to apply filter?
+http://127.0.0.1:8000/studentapi/?search=Mumbai
+- this lookups using icontains in both name and city 
+
+Different ways for text search in SearchFilter?
+-'^' Starts with matches
+-'=' Exact matches
+-'@' full text search
+-'$' Regex Search
+
+e.g.: search_fields = ['^name']
+http://127.0.0.1:8000/studentapi/?search=r
+
+
+OrderingFilter
+OrderingFilter class supports simple query paramater based controlled 
+ordering of results.
+e.g.: 
+http://127.0.0.1:8000/studentapi/?ordering=name
+
+- for reverse ordering use prefix '-'
+http://127.0.0.1:8000/studentapi/?ordering=-name
+
+- for multiple ordering
+http://127.0.0.1:8000/studentapi/?ordering=name,city
+
+If you want to perform OrderingFilter, you can set ordering_fields attribute
+and incldue fields in the list which you want to filter against.
+
+How to use OrderingFilter?
+from rest_framework.filters import OrderingFilter
+class StudentListView(ListAPIView):
+	queryset = Student.Objects.all()
+	serializer_class = StudentSerializer
+	filter_backends = [OrderingFilter]
+	ordering_fields = ['name','city']
+
+- if want order against all fields can write '__all__'
+
+
+Pagination
+REST Framework supports customizable pagination.
+This allows you to modify how large result sets are split into indvidual 
+pages of data.
+
+DRF provides three types of pagination style:
+- PageNumberPagination
+- LimitOffsetPagination
+- CursorPagination 
+
+PageNumberPagination
+This pagination style splits large results into individual pages data.
+Just like a book. 
+-page attribute decides which page to be shown 
+-page_size decides how many records to be shown
+
+Global config for PageNumberPagination
+The pagination can be set globally using DEFAULT_PAGINATION_CLASS and 
+PAGE_SIZE.
+
+REST_FRAMEWORK={
+	'DEFAULT_PAGINATION_CLASS': 
+		'rest_framework.pagination.PageNumberPagination',
+	'PAGE_SIZE': 5
+}
+
+Pagination in api view can be set using pagination_class attribute.
+from rest_framework.pagination import PageNumberPagination
+class StudentListView(ListAPIView):
+	queryset = Student.Objects.all()
+	serializer_class = StudentSerializer
+	pagination_class = PageNumberPagination
+
+
+- If want to have customize pagination for specfic view can override 
+PageNumberPagination. Create new file customize_pagination.py.
+
+from rest_framework.pagination import PageNumberPagination
+class MypageNumberPagination(PageNumberPagination):
+	page_size = 10
+	page_query_param = 'p'       
+	page_size_query_param = 'records'
+	max_page_size = 7
+	last_page_strings = 'end'
+
+page_query_param = 'p' will rename page to p studentapi/?p=2
+page_size_query_param = 'records' will give range of records in page 
+			studentapi/?page=2&records=10
+max_page_size = 7 even if you give ?page=2&records=10 it will show max
+		records 7 
+last_page_strings = 'end' will show records on last page 
+			studentapi/?page=end
+		by default its set to 'last' keyword
+
+How to make request with parameter?
+http://127.0.0.1:8000/studentapi/?page=2
+
+
+LimitOffsetPagination
+This pagination method control how many records to show and where to start
+from.
+- limit attribute defines how many records to be shown 
+- offset attribute defines from which record to start
+
+Global and local configuration remains same as PageNumberPagination.
+
+How to make request with parameter?
+http://127.0.0.1:8000/studentapi/?limit=4&offset=6
+
+How to write customize LimitOffsetPagination for specific view?
+class MyLimitOffsetPagination(LimitOffsetPagination):
+	default_limit = 5
+	offset_query_param = 'myoffset' // just renames like page_query_param
+	max_limit = 6 
+
+
+CursorPagination
+This pagination method doesnot make use of page numbers or offset. Instead it
+uses cursor to keep track of current position in result set.
+- Works only in one direction (next/previous) and cannot jump to specific 
+	page.
+- Requires unique and unchanging field (usually timestamp like create_at
+	field) to keep order consistent.
+- Default setting is by the newest first -created_at.
+
+
+Global and local configuration remains same as PageNumberPagination.
+
+How to write customize CursorPagination for specific view?
+class MyCursorPagination(CursorPagination):
+	page_size = 5
+	ordering = 'name'  // default is created_at field
+	cursor_query_param = 'cu' // just renames like page_query_param 
+
+
 
 
 
