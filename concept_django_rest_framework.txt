@@ -1555,6 +1555,98 @@ class MyCursorPagination(CursorPagination):
 	cursor_query_param = 'cu' // just renames like page_query_param 
 
 
+Serializer Relationship:
+Sometimes models are linked to each other through relationships like 
+ForeignKey, OneToOneField, ManyToManyField.
+When we serialize these models we need a way to represent the relationship
+in the API Response. This is called serailizer relationship.
+
+e.g.: 
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE,
+				related_name = 'book')
+
+Each book has one author. This means book model is linked with author model.
+Now when we create api for the Author model we must decide how to represnt 
+the book field in JSON ouput.
+
+Use PrimaryKeyRelatedField if you only need the author's ID.
+      book = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+Use StringRelatedField if you want the author's name.
+	book = serializers.StringRelatedField(many=True, read_only=True)
+Use SlugRelatedField if the author has a unique identifier like a username.
+	book = serializers.SlugRelatedField(many=True, read_only=True, 
+				slug_field = 'title')
+Use HyperlinkedRelatedField if you want a clickable link to the author.
+ This will give all the book links.
+     book = serializers.HyperlinkedRelatedField(many=True, read_only=True, 
+			view_name = 'book-detail')
+
+HyperLinkedIdentityField gives link to only one book
+    book = serializers.HyperlinkedRelatedField(view_name = 'book-detail')
 
 
+
+
+HyperLinkedModelSerializer
+This model is same as ModelSerializer except that it uses Hyperlinks 
+rather than primary keys. 
+It gives additional field url which is a link to details of the record.
+
+How to write HyperLinkedModelSreialzier?
+class StudentSreialzier(serialziers.HyperLinkedModelSerializer):
+	class Meta:
+		model = Student
+		fields = ['id', 'url', 'name', 'roll', 'city']
+
+extra info: 
+If want to see what all fields any serialer provides then use repr().
+python manage.py shell 
+from api.serializers import StudentSerializer
+serialzier = StudentSerialzier()
+print(repr(serializer))
+	id = IntegerField()
+	url = HyperlinkedIndetifyField()
+	name = CharField()
+	roll = IntegerField()
+	city = CharField()
+
+
+Nested Serializer
+A nested serialzier means using one serializer inside another serialzier. 
+This helps when you want related data to be included in single API response.
+
+How to implement nested Serializer? 
+
+models.py 
+class Singer(models.Model):
+	name = models.CharField(max_length = 800)
+	gender = mdoels.CharField(max_length = 800)
+
+class Song(models.Model):
+	title = models.CharField(max_length = 800)
+	duration = models.CharField(max_length = 800)
+	singer = models.ForeignKey(Singer, on_delete = models.CASCADE, 
+				related_name = 'sungby')
+
+serializer.py
+class SongSerializer(serialziers.ModelSerialzier):
+	class Meta:
+		model = song
+		fields = ['id', 'title', 'duration', 'singer']	
+
+
+class SingerSerialzier(serialzier.ModelSerializer):
+	sungby = SongSerilaizer(many=True, read_only=True)
+	class Meta:
+		model  = Singer
+		fields = ['id', 'name', 'gender', 'sungby']
+
+
+// with the sungby field we are perfroming nested serializer resulting into 
+data with both singer and his all songs.
 
