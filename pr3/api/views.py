@@ -4,12 +4,18 @@ from api.serializer import StudentSerializer
 from api.models import Student
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 # @api_view(['GET', 'POST'])
 # def studentapi(request, id=None):
-class StudentAPI(APIView):
+class StudentAPI(APIView):    
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     # if request.method == 'GET':
     def get(self, request, format=None, id=None):
         python_data = request.data
